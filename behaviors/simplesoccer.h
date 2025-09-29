@@ -2,6 +2,8 @@
 #define _SIMPLE_SOCCER_H
 
 #include "naobehavior.h"
+#include <list>
+#include <set>
 
 enum Role {
     GOALIE,

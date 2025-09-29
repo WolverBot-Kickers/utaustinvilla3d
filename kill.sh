@@ -5,6 +5,6 @@
 
 # Kill agents
 AGENT="agentspark"
-killall -9 $AGENT
+pkill $AGENT
 sleep 1
 
