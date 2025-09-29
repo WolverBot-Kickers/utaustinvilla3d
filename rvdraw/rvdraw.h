@@ -198,23 +198,23 @@ public:
     void clear();
 
     void drawCircle(string name, double x, double y, double radius,
-                    RVSender::Color c=(RVSender::Color)uNum);
+                    RVSender::Color c);
     void drawCircle(string name, double x, double y, double radius, float r, float g, float b);
 
     void drawLine(string name, double x1, double y1, double x2, double y2,
-                  RVSender::Color c=(RVSender::Color)uNum);
+                  RVSender::Color c);
     void drawLine(string name, double x1, double y1, double x2, double y2, float r, float g, float b);
 
     void drawText(string name, string text, double x, double y,
-                  RVSender::Color c=(RVSender::Color)uNum);
+                  RVSender::Color c);
     void drawText(string name, string text, double x, double y, float r, float g, float b);
 
     void drawPoint(string name, double x, double y, double radius,
-                   RVSender::Color c=(RVSender::Color)uNum);
+                   RVSender::Color c);
     void drawPoint(string name, double x, double y, double radius, float r, float g, float b);
 
     void drawSphere(string name, double x, double y, double z, double radius,
-                    RVSender::Color c=(RVSender::Color)uNum);
+                    RVSender::Color c);
     void drawSphere(string name, double x, double y, double z, double radius,
                     float r, float g, float b);
 
@@ -222,7 +222,7 @@ public:
     /* the 'a' arguments are for alpha channel (transparency) */
     void drawPolygon(string name, float *v, int numVerts);
     void drawPolygon(string name, float *v, int numVerts, float a);
-    void drawPolygon(string name, float *v, int numVerts, RVSender::Color c=(RVSender::Color)uNum,
+    void drawPolygon(string name, float *v, int numVerts, RVSender::Color c,
                      float a=1.0f);
     void drawPolygon(string name, float *v, int numVerts, float r, float g, float b, float a=1.0f);
 
@@ -236,24 +236,24 @@ public:
     void clearStaticDrawings();
 
     void drawCircle(double x, double y, double radius,
-                    RVSender::Color c=(RVSender::Color)uNum);
+                    RVSender::Color c);
     void drawCircle(double x, double y, double radius, float r, float g, float b);
 
     void drawLine(double x1, double y1, double x2, double y2,
-                  RVSender::Color c=(RVSender::Color)uNum);
+                  RVSender::Color c);
     void drawLine(double x1, double y1, double x2, double y2, float r, float g, float b);
 
     //these two are causing strange errors in roboviz
     /*void drawText(string text, double x, double y,
-                    RVSender::Color c=(RVSender::Color)uNum);
+                    RVSender::Color c);
     void drawText(string text, double x, double y, float r, float g, float b);*/
 
     void drawPoint(double x, double y, double radius,
-                   RVSender::Color c=(RVSender::Color)uNum);
+                   RVSender::Color c);
     void drawPoint(double x, double y, double radius, float r, float g, float b);
 
     void drawSphere(double x, double y, double z, double radius,
-                    RVSender::Color c=(RVSender::Color)uNum);
+                    RVSender::Color c);
     void drawSphere(double x, double y, double z, double radius,
                     float r, float g, float b);
 
@@ -268,19 +268,19 @@ public:
      */
 
     void drawText(string text, double x, double y,
-                  RVSender::Color c=(RVSender::Color)uNum);
+                  RVSender::Color c);
     void drawText(string text, double x, double y, float r, float g, float b);
 
     /* draw to self */
-    void drawAgentText(string text, RVSender::Color c=(RVSender::Color)uNum);
+    void drawAgentText(string text, RVSender::Color c);
     void drawAgentText(string text, float r, float g, float b);
 
     /* draw to teammate with uniform "uNum" */
-    void drawAgentText(string text, int uNum, RVSender::Color c=(RVSender::Color)uNum);
+    void drawAgentText(string text, int uNum, RVSender::Color c);
     void drawAgentText(string text, int uNum, float r, float g, float b);
 
     /* draw to player on team "side", with uniform "uNum" */
-    void drawAgentText(string text, int uNum, int side, RVSender::Color c=(RVSender::Color)uNum);
+    void drawAgentText(string text, int uNum, int side, RVSender::Color c);
     void drawAgentText(string text, int uNum, int side, float r, float g, float b);
 
     /* defaults to removing text from self, but may specify a teammate, or any player on the field */
