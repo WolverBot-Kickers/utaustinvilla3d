@@ -6,7 +6,7 @@
 #include <vector>
 #include <fstream>
 #include <unordered_set>
-#include "A_Star.h"
+#include "Astar.h"
 #include "expansion_groups.h"
 
 #define SQRT2 1.41421356237
