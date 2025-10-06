@@ -3,10 +3,6 @@
 
 #include "Astar.h"
 
-struct coordinate { //for callbackRobotPosition to return
-    float x;
-    float y;
-}
 
 class AstarROSWrapper {
     public:
@@ -25,17 +21,38 @@ class AstarROSWrapper {
             robot_position_subscriber_ = nh->subcribe(
                 "robot_position", 2, callbackRobotPosition, this);
 
+            goal_position_subscriber_ = nh->subscribe(
+                "goal_position", 2, callbackGoalPosition, this);
+            
+            //call more topics to get param, and params_size
+
             //subscribe to more topics to get relevant data to call the Astar algorithm
             
         }
 
         //change std_msgs::Int32 depending on the robot coordinate
-        coordinate callbackRobotPosition(const std_msgs::Int32MultiArray &msg) {
+        void callbackRobotPosition(const std_msgs::Int32MultiArray &msg) { //msg.data should be an array
             //access msg using msg.data
             //this will have access to the robots coordinates
+            robotx = msg.data.at(0);
+            roboty = msg.data.at(1);
+        }
+
+        void callbackGoalPosition(const std_msgs::Int32MultiArray &msg) {
+            goalx = msg.data.at(0);
+            goaly = msg.data.at(1);
         }
         
     private:
+        int robotx;
+        int roboty;
+
+        int goalx;
+        int goaly;
+
+        float* param;
+        int params_size;
+
         
 };
 
