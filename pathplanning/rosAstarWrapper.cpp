@@ -1,5 +1,5 @@
 #include <ros/ros.h> //will need for using ROS
-#include <std_msgs> //ROS library
+#include <std_msgs> //ROS library for subcriber
 
 #include "Astar.h"
 
@@ -24,9 +24,16 @@ class AstarROSWrapper {
             goal_position_subscriber_ = nh->subscribe(
                 "goal_position", 2, callbackGoalPosition, this);
             
-            //call more topics to get param, and params_size
-
+            //this subcriber will expect two items
+            //!std_msgs does not have a float options so we should encode the opponent position in a different manner
+            //update the number of expected values to get
+            opponent_position_subscriber_ = nh->subscribe(
+                "all_opponents_position", 2, callbackOpponentPositions, this); 
+            
             //subscribe to more topics to get relevant data to call the Astar algorithm
+
+            //TODO astar should return a path that the robot can then post
+            astar(robotx, roboty, goalx, goaly, param, params_size);
             
         }
 
@@ -42,13 +49,28 @@ class AstarROSWrapper {
             goalx = msg.data.at(0);
             goaly = msg.data.at(1);
         }
+
+        void callbackOpponentPositions(const std_msgs::Int32MultiArray &msg) {
+            //update the param and params_size 
+
+        }
+
+        void resetValues() {
+            robotx = 0;
+            roboty = 0;
+            goalx  = 0;
+            goaly  = 0;
+
+            //param = 
+            //params_size = 
+        }
         
     private:
-        int robotx;
-        int roboty;
+        int robotx = 0;
+        int roboty = 0;
 
-        int goalx;
-        int goaly;
+        int goalx = 0;
+        int goaly = 0;
 
         float* param;
         int params_size;
