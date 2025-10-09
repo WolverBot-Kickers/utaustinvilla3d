@@ -32,8 +32,12 @@ class AstarROSWrapper {
             
             //subscribe to more topics to get relevant data to call the Astar algorithm
 
-            //TODO astar should return a path that the robot can then post
+            //TODO astar should return a path that the robot can then publish
             astar(robotx, roboty, goalx, goaly, param, params_size);
+
+
+            //should publish the astar path that we want as the topic "astar_path"
+            pathPublisher_ = nh->advertise<std_msgs::Int32MultiArray>("astar_path", *path that astar returns*);
             
         }
 
@@ -74,6 +78,9 @@ class AstarROSWrapper {
 
         float* param;
         int params_size;
+
+        //should be used for publishing the path we take
+        ros::Publisher pathPublisher_;
 
         
 };
