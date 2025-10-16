@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(UTAustinVillaBase CXX C)
+project(Ros2_UTAustinVillaBase)
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/)
 
@@ -50,7 +50,6 @@ set(CORE_FILES
 )
 
 set(SRCS
-  main.cc 
   behaviors/behavior.cc
   behaviors/naobehavior.cc
   behaviors/checkfall.cc 
@@ -82,11 +81,12 @@ set(SRCS
   stats/recordstatsbehavior.cc
 )
 
-set(BINARY agentspark)
+# set(BINARY agentspark)
 
-add_executable(${BINARY}
-${SRCS}
-)
+# add_executable(${BINARY}
+# main.cc 
+# ${SRCS}
+# )
 
 target_link_libraries(${BINARY}
 ${RCSSNET3D_LIBRARY}
@@ -102,3 +102,22 @@ rt
 #  COMMAND ${CMAKE_SOURCE_DIR}/scripts/copy_libs.sh ARGS ${BINARY} libs
 #)
 #set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES libs)
+
+#########ROS2 SECTION
+
+find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+
+
+add_executable(naobehavior 
+src/nao_spark.cpp 
+SRCS)
+ament_target_dependencies(naobehavior rclcpp Rcssnet3d Boost Threads)
+
+install(TARGETS
+concert_server
+customer
+DESTINATION lib/${PROJECT_NAME}
+)
+
+ament_package()
