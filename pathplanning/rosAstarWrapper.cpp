@@ -17,8 +17,7 @@ class AstarROSWrapper {
         void callAstar(ros::NodeHandle *nh) {
             //depending on how the ROBOT is handled, we can split this up into multiple topics to subcribe to
 
-
-            robot_position_subscriber_ = nh->subcribe(
+            robot_position_subscriber_ = nh->subscribe(
                 "robot_position", 2, callbackRobotPosition, this);
 
             goal_position_subscriber_ = nh->subscribe(
@@ -28,10 +27,22 @@ class AstarROSWrapper {
             //!std_msgs does not have a float options so we should encode the opponent position in a different manner
             //update the number of expected values to get
             opponent_position_subscriber_ = nh->subscribe(
-                "all_opponents_position", 2, callbackOpponentPositions, this); 
+                "all_opponents_position", 1, callbackOpponentPositions, this); 
+
+            
+            teammate_position_subscriber_ = nh->subscribe(
+                "all_teammate_position", 1, callbackTeammatePositions, this);
+            
             
             //subscribe to more topics to get relevant data to call the Astar algorithm
 
+            //TODO
+            /*
+                If we are out of bounds, call builddirectpath to get back onto the field as soon as possible
+
+                else, call astar
+            */
+            
             //TODO astar should return a path that the robot can then publish
             astar(robotx, roboty, goalx, goaly, param, params_size);
 
@@ -54,9 +65,20 @@ class AstarROSWrapper {
             goaly = msg.data.at(1);
         }
 
+        //msg: opponent1x opponent1y opponent2x opponent2y ...
         void callbackOpponentPositions(const std_msgs::Int32MultiArray &msg) {
             //update the param and params_size 
+            for(size_t i = 0; i < 8; ++i) {
+                opponents[i] = msg[i];
+            }
+        }
 
+        //msg: teammate1x teammate1y teammate2x teammate2y ...
+        void callbackTeammatePositions(const std_msgs::Int32MultiArray &msg) {
+            //update array for team mate positions
+            for(size_t i = 0; i < 6; ++i) {
+                teammates[i] = msg[i];
+            }
         }
 
         void resetValues() {
@@ -65,8 +87,9 @@ class AstarROSWrapper {
             goalx  = 0;
             goaly  = 0;
 
-            //param = 
-            //params_size = 
+            int opponents = {0,0,0,0,0,0,0,0};
+
+            int teammates = {0,0,0,0,0,0,0,0};
         }
         
     private:
@@ -76,8 +99,12 @@ class AstarROSWrapper {
         int goalx = 0;
         int goaly = 0;
 
-        float* param;
-        int params_size;
+        int opponents[8] = {0,0,0,0,0,0,0,0};
+
+        int teammates[6] = {0,0,0,0,0,0};
+
+        int ballx = 0;
+        int bally = 0;
 
         //should be used for publishing the path we take
         ros::Publisher pathPublisher_;
