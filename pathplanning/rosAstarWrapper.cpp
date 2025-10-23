@@ -32,6 +32,10 @@ class AstarROSWrapper {
             
             teammate_position_subscriber_ = nh->subscribe(
                 "all_teammate_position", 1, callbackTeammatePositions, this);
+
+            ball_position_subscriber_ = nh->subscribe(
+                "ball_position", 2, callbackBallPosition, this);
+            
             
             
             //subscribe to more topics to get relevant data to call the Astar algorithm
@@ -44,7 +48,7 @@ class AstarROSWrapper {
             */
             
             //TODO astar should return a path that the robot can then publish
-            astar(robotx, roboty, goalx, goaly, param, params_size);
+            astar(robotx, roboty, goalx, goaly, opponents, teammates, ballx, bally);
 
 
             //should publish the astar path that we want as the topic "astar_path"
@@ -56,13 +60,13 @@ class AstarROSWrapper {
         void callbackRobotPosition(const std_msgs::Int32MultiArray &msg) { //msg.data should be an array
             //access msg using msg.data
             //this will have access to the robots coordinates
-            robotx = msg.data.at(0);
-            roboty = msg.data.at(1);
+            robotx = msg.data[0];
+            roboty = msg.data[1];
         }
 
         void callbackGoalPosition(const std_msgs::Int32MultiArray &msg) {
-            goalx = msg.data.at(0);
-            goaly = msg.data.at(1);
+            goalx = msg.data[0];
+            goaly = msg.data[1];
         }
 
         //msg: opponent1x opponent1y opponent2x opponent2y ...
@@ -81,15 +85,20 @@ class AstarROSWrapper {
             }
         }
 
+        void callbackBallPosition(const std_msgs::Int32MultiArray &msg) {
+            ballx = msg.data[0];
+            bally = msg.data[1];
+        }
+
         void resetValues() {
             robotx = 0;
             roboty = 0;
             goalx  = 0;
             goaly  = 0;
 
-            int opponents = {0,0,0,0,0,0,0,0};
+            int opponents = {-1,-1,-1,-1,-1,-1,-1,-1};
 
-            int teammates = {0,0,0,0,0,0};
+            int teammates = {-1,-1,-1,-1,-1,-1};
         }
         
     private:
@@ -99,9 +108,9 @@ class AstarROSWrapper {
         int goalx = 0;
         int goaly = 0;
 
-        int opponents[8] = {0,0,0,0,0,0,0,0};
+        int opponents[8] = {-1,-1,-1,-1,-1,-1,-1,-1};
 
-        int teammates[6] = {0,0,0,0,0,0};
+        int teammates[6] = {-1,-1,-1,-1,-1,-1};
 
         int ballx = 0;
         int bally = 0;
