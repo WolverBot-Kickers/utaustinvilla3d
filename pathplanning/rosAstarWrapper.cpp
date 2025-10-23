@@ -89,7 +89,7 @@ class AstarROSWrapper {
 
             int opponents = {0,0,0,0,0,0,0,0};
 
-            int teammates = {0,0,0,0,0,0,0,0};
+            int teammates = {0,0,0,0,0,0};
         }
         
     private:
