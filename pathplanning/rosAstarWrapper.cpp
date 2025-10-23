@@ -129,5 +129,7 @@ int main(int argc, char **argv) {
 
     ros::spin(); //keeps the node alive
 
+    ros::shutdown();
+
     //call anything that needs to be cleaned up here after the node stops
 }
