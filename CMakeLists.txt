@@ -1,11 +1,14 @@
-cmake_minimum_required(VERSION 2.8)
-project(Ros2_UTAustinVillaBase)
+cmake_minimum_required(VERSION 3.8)
+project(utaustin CXX C)
+
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/)
-
 find_package(Threads REQUIRED)
-find_package(Boost COMPONENTS system REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system)
+# find_package(Spark REQUIRED)
 find_package(Rcssnet3d REQUIRED)
+add_library(Rcssnet3d_lib SHARED IMPORTED)
+set_target_properties( Rcssnet3d_lib PROPERTIES IMPORTED_LOCATION ${RCSSNET3D_LIBRARY} )
 
 if(NOT CMAKE_BUILD_TYPE)
   message(STATUS "No build type selected, default to Release")
@@ -18,7 +21,7 @@ endif(NOT CMAKE_CXX_FLAGS)
 
 set(CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-new-dtags")
 
-set(CORE_PATH utwalk)
+set(CORE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/utwalk)
 
 include_directories(
 ${CORE_PATH}
@@ -88,13 +91,13 @@ set(SRCS
 # ${SRCS}
 # )
 
-target_link_libraries(${BINARY}
-${RCSSNET3D_LIBRARY}
-${Boost_SYSTEM_LIBRARY}
-dl
-${CMAKE_THREAD_LIBS_INIT}
-rt 
-)
+# target_link_libraries(${BINARY}
+# ${RCSSNET3D_LIBRARY}
+# ${Boost_SYSTEM_LIBRARY}
+# dl
+# ${CMAKE_THREAD_LIBS_INIT}
+# rt 
+# )
 
 # Automatically copy linked shared objects to libs directory after evey build
 #add_custom_command(TARGET ${BINARY}
@@ -103,21 +106,23 @@ rt
 #)
 #set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES libs)
 
-#########ROS2 SECTION
+#------------------------------ROS2 SECTION------------------------------
 
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 
-
+add_definitions(-D_GLIBCXX_USE_CXX11_ABI=1)
 add_executable(naobehavior 
-src/nao_spark.cpp 
-SRCS)
-ament_target_dependencies(naobehavior rclcpp Rcssnet3d Boost Threads)
+  ros_src/nao_spark.cpp 
+  ${SRCS}
+)
+ament_target_dependencies(naobehavior rclcpp Boost Threads)
+target_link_libraries(naobehavior Rcssnet3d_lib)
+set_property(TARGET naobehavior PROPERTY CXX_STANDARD 11)
 
 install(TARGETS
-concert_server
-customer
-DESTINATION lib/${PROJECT_NAME}
+  naobehavior
+  DESTINATION lib/${PROJECT_NAME}
 )
 
 ament_package()
