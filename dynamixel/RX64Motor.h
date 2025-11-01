@@ -1,7 +1,7 @@
 #ifndef RX64MOTOR_H
 #define RX64MOTOR_H
 
-#include "dynamixel_sdk.h"
+#include "dynamixel_sdk/dynamixel_sdk.h"
 
 // Control table addresses for RX64 (Protocol 1.0)
 #define ADDR_TORQUE_ENABLE       24

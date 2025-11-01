@@ -103,7 +103,7 @@ bool PortFinder::tryPort(const char* port, int motor_id, int baudrate) {
     return (comm_result == COMM_SUCCESS && error == 0);
 }
 
-bool PortFinder::findMotor(int motor_id, int baudrate, std::string& found_port) {
+bool PortFinder::findMotor(std::string& found_port, int motor_id, int baudrate) {
     printf("PortFinder: Scanning for RX64 motor (ID=%d, Baudrate=%d)...\n", 
            motor_id, baudrate);
     

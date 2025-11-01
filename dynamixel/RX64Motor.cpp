@@ -14,11 +14,9 @@ RX64Motor::RX64Motor(const char* port, int motor_id)
 
 RX64Motor::~RX64Motor() {
     // Cleanup - disable torque and close port
-    if (is_initialized) {
+    if (is_initialized && portHandler) {
         enableTorque(false);
-        if (portHandler && portHandler->isOpen()) {
-            portHandler->closePort();
-        }
+        portHandler->closePort();
     }
 }
 

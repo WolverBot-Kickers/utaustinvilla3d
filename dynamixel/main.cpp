@@ -17,7 +17,7 @@ int main() {
 
     // AUTO-DETECT: Try to find motor automatically (like CAN device scanning)
     printf("Attempting auto-detection...\n");
-    if (PortFinder::findMotor(motor_id, 57600, port_name)) {
+    if (PortFinder::findMotor(port_name, motor_id, 57600)) {
         printf("Auto-detection successful! Found motor on: %s\n\n", port_name.c_str());
     } else {
         // Fallback: Try common port names

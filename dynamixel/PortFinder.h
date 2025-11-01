@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-#include "dynamixel_sdk.h"
+#include "dynamixel_sdk/dynamixel_sdk.h"
 
 /**
  * PortFinder - Auto-detect USB ports and find Dynamixel motors
@@ -26,8 +26,7 @@ public:
      * @param found_port Output parameter: port name if found
      * @return true if motor found, false otherwise
      */
-    static bool findMotor(int motor_id = 1, int baudrate = 57600, 
-                          std::string& found_port);
+    static bool findMotor(std::string& found_port, int motor_id = 1, int baudrate = 57600);
 
     /**
      * Try to ping a motor on a specific port
@@ -38,8 +37,6 @@ public:
      */
     static bool tryPort(const char* port, int motor_id, int baudrate = 57600);
 
-private:
-    static const int DEFAULT_BAUDRATE = 57600;
 };
 
 #endif /* PORTFINDER_H */
