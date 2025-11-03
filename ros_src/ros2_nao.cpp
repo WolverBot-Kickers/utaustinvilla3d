@@ -1,4 +1,5 @@
 #include "rclcpp/rclcpp.hpp"
+#include "ros2_nao.hpp"
 #include <errno.h>
 #include <signal.h>
 #include <string>
@@ -15,6 +16,8 @@
 #include "../behaviors/simplesoccer.h"
 #include "../behaviors/gazebobehavior.h"
 #include "../stats/recordstatsbehavior.h"
+
+#define SRC_DIR "/home/wbk/wolverbot/src/utaustinvilla3d"
 
 using namespace rcss::net;
 using namespace std;
@@ -41,7 +44,13 @@ int agentBodyType = 0;
 
 // Global variable if using the fat proxy
 bool fFatProxy = false;
+Ros2NaoBehavior::Ros2NaoBehavior(const std::string teamName, int uNum, 
+          const map<string, string>& namedParams_, const string& rsg_)
+                   : Node(teamName + std::to_string(uNum)), 
+                    NaoBehavior( teamName,  uNum, namedParams_,  rsg_)
+{
 
+}
 // SIGINT handler prototype
 extern "C" void handler(int sig)
 {
@@ -143,6 +152,15 @@ string agentType("naoagent");
 string rsg("rsg/agent/nao/nao.rsg");
 void ReadOptions(int argc, char* argv[])
 {
+    try 
+    {
+      rclcpp::init(argc, argv);
+    }
+    catch (char const* c)
+    {
+      cerr << "rclcpp init error" << endl;
+      return;
+    }
 
     teamName = "UTAustinVilla_Base";
     uNum = 0; // Value of 0 means choose next available number
@@ -263,6 +281,16 @@ void ReadOptions(int argc, char* argv[])
     } // for-loop
 }
 
+void FillOptions()
+{
+
+    teamName = "UTAustinVilla_Base";
+    uNum = 0; // Value of 0 means choose next available number
+
+    string inputsFile = "/home/wbk/wolverbot/src/utaustinvilla3d/paramfiles/defaultParams.txt";
+    LoadParams(inputsFile);
+}
+
 bool Init()
 {
     cout << "connecting to TCP " << gHost << ":" << gPort << "\n";
@@ -328,6 +356,7 @@ bool Init()
             return false;
         }
     }
+    
 
 
     return true;
@@ -491,46 +520,12 @@ bool GetMessage(string& msg)
 
 void Run()
 {
-    Behavior *behavior;
-    if (agentType == "naoagent") {
-        behavior = new NaoBehavior(teamName, uNum, namedParams, rsg);
-    }
-    else if (agentType == "pkgoalie") {
-        behavior = new PKGoalieBehavior(teamName, uNum, namedParams, rsg);
-    }
-    else if (agentType == "pkshooter") {
-        behavior = new PKShooterBehavior(teamName, uNum, namedParams, rsg);
-    }
-    else if (agentType == "simplesoccer") {
-        behavior = new SimpleSoccerBehavior(teamName, uNum, namedParams, rsg);
-    }
-    else if (agentType == "gazebo") {
-        agentBodyType = GAZEBO_AGENT_TYPE;
-        behavior = new GazeboBehavior(teamName, uNum, namedParams, rsg);
-    }
-    else if (agentType == "fixedKickAgent") {
-        cerr << "creating OptimizationBehaviorFixedKick" << endl;
-        behavior = new OptimizationBehaviorFixedKick(  teamName,
-                uNum,
-                namedParams,
-                rsg,
-                outputFile);
-    }
-    else if (agentType == "walkForwardAgent") {
-        cerr << "creating OptimizationBehaviorWalkForward" << endl;
-        behavior = new OptimizationBehaviorWalkForward(  teamName,
-                uNum,
-                namedParams,
-                rsg,
-                outputFile);
-    }
-    else if ( agentType == "recordstats") {
-        behavior = new RecordStatsBehavior(teamName, uNum, namedParams, rsg,
-                                           outputFile);
-    }
-    else {
-        throw "unknown agent type";
-    }
+    
+    std::shared_ptr<Ros2NaoBehavior> behavior = std::make_shared<Ros2NaoBehavior>(teamName, uNum, namedParams, rsg);
+    
+    RCLCPP_INFO(behavior->get_logger(), "HEY!!!!! THIS WORKS!!!!");
+    rclcpp::shutdown();
+    return;
 
     PutMessage(behavior->Init()+"(syn)");
 
@@ -545,6 +540,7 @@ void Run()
         if (mPort != -1) {
             PutMonMessage(behavior->getMonMessage());
         }
+        rclcpp::spin_some(behavior);
     }
 }
 
@@ -558,20 +554,26 @@ main(int argc, char* argv[])
     try
     {
         PrintGreeting();
-        ReadOptions(argc,argv);
 
-        rclcpp::init(argc, argv);
-        auto node = std::make_shared<rclcpp::Node>("minimal_node");
-        rclcpp::spin(node);
-        RCLCPP_INFO(node->get_logger(), "HEY!!!!! THIS WORKS!!!!");
-        rclcpp::shutdown();
-        return 0;
+        try 
+        {
+          rclcpp::init(argc, argv);
+        }
+        catch (char const* c)
+        {
+          cerr << "rclcpp init error" << endl;
+          return 1;
+        }
 
-        if (! Init())
+        FillOptions();
+
+        if (!Init())
         {
             return 1;
         }
 
+        Run();
+        Done();
     }
     catch (char const* c)
     {

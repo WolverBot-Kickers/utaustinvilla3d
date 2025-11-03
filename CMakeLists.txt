@@ -113,7 +113,7 @@ find_package(rclcpp REQUIRED)
 
 add_definitions(-D_GLIBCXX_USE_CXX11_ABI=1)
 add_executable(naobehavior 
-  ros_src/nao_spark.cpp 
+  ros_src/ros2_nao.cpp 
   ${SRCS}
 )
 ament_target_dependencies(naobehavior rclcpp Boost Threads)
