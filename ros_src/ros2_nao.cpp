@@ -523,9 +523,8 @@ void Run()
     
     std::shared_ptr<Ros2NaoBehavior> behavior = std::make_shared<Ros2NaoBehavior>(teamName, uNum, namedParams, rsg);
     
-    RCLCPP_INFO(behavior->get_logger(), "HEY!!!!! THIS WORKS!!!!");
-    rclcpp::shutdown();
-    return;
+    RCLCPP_INFO(behavior->get_logger(), "HEY!!!!! THIS INITS!!!!");
+    
 
     PutMessage(behavior->Init()+"(syn)");
 
@@ -542,6 +541,8 @@ void Run()
         }
         rclcpp::spin_some(behavior);
     }
+    rclcpp::shutdown();
+    return;
 }
 
 int
