@@ -12,8 +12,8 @@
 #define SQRT2 1.41421356237
 #define SCALE 10.f
 
-#define LENGTH 340 // 2m border - 30m field - 2m border
-#define WIDTH 240   // 2m border - 20m field - 2m border
+#define LENGTH 91 // 9m field
+#define WIDTH 61   // 6m field
 #define STEP_SIZE 0.5
 #define HARD_RADIUS 1 // odd
 #define SOFT_RADIUS 3 // odd
@@ -55,18 +55,6 @@ std::vector<std::pair<int, int> > final_p;
 float board_cost[LENGTH*WIDTH];
 int final_path_size = 0;
 
-
-float ball_X = 0;
-float ball_Y = 0;
-// all inputs are [ID] X Y Z
-    // X values are positive - 0~240
-    // Y values are negative - 0~-340
-
-// first input is ball: [B] X, Y, Z
-// opponent input: list of [ID] X Y Z
-// --> put into 1d array of [x,y,x,y,...,x,y,x,y]
-
-
 /**
  * @brief Converts board index to coordinate pair
 
@@ -78,20 +66,40 @@ inline std::pair<int, int> indexToCoord(int index) {
     int x = index % WIDTH;
     return std::make_pair(x, y);
 }
+// Returns
+std::pair<int*, int> get_obstacles(int* opps, int* teammates, int ballX, int ballY, bool ballIsGoal) {
+    int maxOpps = 4;
+    int maxTeammates = 3;
 
-float* get_obstacles(float* opponent_input, int num_inputs){
-    ball_X = opponent_input[1];
-    ball_Y = opponent_input[2];
+    int maxObstacles = maxOpps + maxTeammates;
+    if (!ballIsGoal) maxObstacles++;
 
-    int num_opponents = num_inputs - 1;
-    float*  obstacles = new float[2*num_opponents];
+    int* obstacles = new float[2*maxObstacles];
+    int index = 0;
+    // Opponents
+    for (int i = 0; i < maxOpps; ++i) {
+        if (opps[2*i] == -1 && opps[2*i+1] == -1) break;
 
-    for (int i = 0; i < num_opponents; i++){
-        obstacles[2*i] = opponent_input[4*(1+i)+1];
-        obstacles[2*i+1] = opponent_input[4*(1+i)+2];
+        obstacles[index] = opps[2*i];
+        obstacles[index+1] = opps[2*i+1];
+        index += 2;
+    }
+    // Teammates
+    for (int i = 0; i < maxTeammates; ++i) {
+        if (teammates[2*i] == -1 && opps[2*i+1] == -1) break;
+
+        obstacles[index] = teammates[2*i];
+        obstacles[index+1] = teammates[2*i+1];
+        index += 2;
+    }
+    // Ball
+    if (!ballIsGoal) {
+        obstacles[index] = ballX;
+        obstacles[index+1] = ballY;
+        index += 2;
     }
 
-    return obstacles;
+    return std::make_pair(obstacles, index);
 }
 
 /**
@@ -109,9 +117,9 @@ float float_to_meters(float array_dist){
  * @param current position and goal position
  * @return float value octile distance between current position and goal position
 */
-float octile_distance(float cur_x, float cur_y, float goal_x, float goal_y){
-    float dx = abs(cur_x - goal_x);
-    float dy = abs(cur_y - goal_y);
+float octile_distance(float cur_x, float cur_y, float goalX, float goalY){
+    float dx = abs(cur_x - goalX);
+    float dy = abs(cur_y - goalY);
     return (dx + dy) + (SQRT2 - 2) * fmin(dx, dy);
 }
 
@@ -123,10 +131,10 @@ float octile_distance(float cur_x, float cur_y, float goal_x, float goal_y){
  * @param current position, goal position, obstacles, number of obstacles
  * @return true if it's possible to go directly from current position to goal position, false otherwise
  */
-bool can_go_direct(float cur_x, float cur_y, float goal_x, float goal_y, float obstacles[], float num_obstacles, float max_safe_dist)
+bool can_go_direct(float cur_x, float cur_y, float goalX, float goalY, float obstacles[], float num_obstacles, float max_safe_dist)
 {
     float a = 10.0;
-    float b = 10.0*(cur_x-goal_x)/(goal_y-cur_y);
+    float b = 10.0*(cur_x-goalX)/(goalY-cur_y);
     float c = -a*cur_x - b*cur_y;
 
     for (int i = 0; i < num_obstacles; i++)
@@ -145,8 +153,8 @@ bool can_go_direct(float cur_x, float cur_y, float goal_x, float goal_y, float o
         // use dot product to calculate the 
         // angle between current->obstacle and current->goal
         // if both angles are acute, path is obstructed.
-        float dot_cur_to_obst = (x-cur_x)*(goal_x-cur_x) + (y-cur_y)*(goal_y-cur_y);
-        float dot_goal_to_obst = (x-goal_x)*(cur_x-goal_x) + (y-goal_y)*(cur_y-goal_y);
+        float dot_cur_to_obst = (x-cur_x)*(goalX-cur_x) + (y-cur_y)*(goalY-cur_y);
+        float dot_goal_to_obst = (x-goalX)*(cur_x-goalX) + (y-goalY)*(cur_y-goalY);
         
         // if close obstacle is between the current and goal position, path is obstructed
         if (dot_cur_to_obst > 0 and dot_goal_to_obst > 0)
@@ -163,15 +171,14 @@ bool can_go_direct(float cur_x, float cur_y, float goal_x, float goal_y, float o
 }
 
 
-
 /**
  * @brief Builds direct path to goal, checked for no obstacles 
 
  * @param current position, goal position
  */
-void build_direct_path(float cur_x, float cur_y, float goal_x, float goal_y){
-    float xx = goal_x - cur_x;
-    float yy = goal_y - cur_y;
+void build_direct_path(float cur_x, float cur_y, float goalX, float goalY){
+    float xx = goalX - cur_x;
+    float yy = goalY - cur_y;
 
     int num_steps = std::max(abs(xx), abs(yy))/STEP_SIZE;
 
@@ -184,8 +191,8 @@ void build_direct_path(float cur_x, float cur_y, float goal_x, float goal_y){
         final_path[2*i] = cur_x + dx*i;
         final_path[2*i +1] = cur_y + dy*i;
     }
-    final_path[2*num_steps + 2] = goal_x;
-    final_path[2*num_steps + 3] = goal_y;
+    final_path[2*num_steps + 2] = goalX;
+    final_path[2*num_steps + 3] = goalY;
 
     return;
 }
@@ -218,15 +225,14 @@ void build_best_path(Node* endNode){
  * @param num_obstacles: number of obstacles
  * @return float* board cost
  */
-void get_board_cost(float obstacles[], int num_obstacles){
-
-    // reset the board cost
+void get_board_cost(int* obstacles, int numObstacles) {
+    // Board cost setup: init to 0 for all states
     for (int i = 0; i < LENGTH*WIDTH; i++){
         board_cost[i] = 0;
     }
 
     // for each obstacle, increment the cost 
-    for (int i = 0; i < 2*num_obstacles; i+=2){
+    for (int i = 0; i < 2*numObstacles; i+=2){
         int x = obstacles[i];
         int y = obstacles[i+1];
 
@@ -260,7 +266,7 @@ void get_board_cost(float obstacles[], int num_obstacles){
     }
 
     // TODO: reset the cost of the goal post and distance r around the ball
-    board_cost[int(std::round(ball_X)*WIDTH + std::round(ball_Y))] = 0;
+    //board_cost[int(std::round(ball_X)*WIDTH + std::round(ball_Y))] = 0;
 
     return;
 }
@@ -314,14 +320,13 @@ inline void checkNeighbor(
  * @param params[]: opponent info is listed in {[ID], X, Y, Z}
  * @param params_size: 
  */
-void astar(int start_x, int start_y, int goal_x, int goal_y, float* param, int params_size) {
+void astar(int startX, int startY, int goalX, int goalY, int* opps, int* teammates, int ballX, int ballY) {
     // segment param
-    float* opp_input = param;
-    float* obstacles = get_obstacles(opp_input, params_size); // fix later
-    int num_obstacles = (params_size/4 - 1) * 2;
+    bool ballIsGoal = (goalX == ballX && goalY == ballY);
+    std::pair<float*, int> obstacleInfo = get_obstacles(opps, teammates, ballX, ballY, ballIsGoal);
 
-    // Setup
-    get_board_cost(obstacles, num_obstacles);
+    get_board_cost(obstacleInfo.first, obstacleInfo.second);
+
     Node* board[LENGTH*WIDTH];
 
     // Intialize preallocated Node* board
@@ -336,23 +341,23 @@ void astar(int start_x, int start_y, int goal_x, int goal_y, float* param, int p
         }
     }
 
-    // if(can_go_direct(start_x, start_y, float goal_x, float goal_y, float *obstacles, int num_obstacles, float max_safe_dist)){
+    // if(can_go_direct(startX, startY, float goalX, float goalY, float *obstacles, int num_obstacles, float max_safe_dist)){
     //     // build direct path
-    //     build_direct_path(int cur_x, int cur_y, int goal_x, int goal_y)
+    //     build_direct_path(int cur_x, int cur_y, int goalX, int goalY)
     //     return;
     // }
 
     // Initialize start node cost in the node board
-    board[start_y*WIDTH + start_x]->g = 0;
-    board[start_y*WIDTH + start_x]->h = octile_distance(
-                                        float(start_x), float(start_y),
-                                        float(goal_x), float(goal_y)
+    board[startY*WIDTH + startX]->g = 0;
+    board[startY*WIDTH + startX]->h = octile_distance(
+                                        float(startX), float(startY),
+                                        float(goalX), float(goalY)
                                         );
-    board[start_y*WIDTH + start_x]->f = board[start_y*WIDTH + start_x]->f + board_cost[start_y*WIDTH + start_x];
+    board[startY*WIDTH + startX]->f = board[startY*WIDTH + startX]->f + board_cost[startY*WIDTH + startX];
     
     std::unordered_set<int> processed;
     std::priority_queue<Node*, std::vector<Node*>, CompareNodes> openSet;
-    openSet.push(board[start_y*WIDTH + start_x]);
+    openSet.push(board[startY*WIDTH + startX]);
 
     // A_star
     bool reached = false;
@@ -363,7 +368,7 @@ void astar(int start_x, int start_y, int goal_x, int goal_y, float* param, int p
         int y = coords.second;
 
         // If reached goal node, build best path
-        if (x == goal_x && y == goal_y) {
+        if (x == goalX && y == goalY) {
             build_best_path(currNode);
             std::cout << "Reached goal node!!" << std::endl;
             reached = true;
@@ -390,7 +395,7 @@ void astar(int start_x, int start_y, int goal_x, int goal_y, float* param, int p
                 || processed.find(y_i*WIDTH + x_i) != processed.end()) {
                 continue;
             }          
-            checkNeighbor(currNode, board[y_i*WIDTH + x_i], goal_x, goal_y, openSet);     
+            checkNeighbor(currNode, board[y_i*WIDTH + x_i], goalX, goalY, openSet);     
         }
     }
 
