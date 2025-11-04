@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: wbk-yolo
+Version: 1.0.0
+Summary: Wolverbot Kickers YOLO-based vision stack for RoboCup Humanoid League
+Maintainer: Wolverbot Kickers Team
+Maintainer-email: team@wolverbotkickers.com
+License: Apache-2.0

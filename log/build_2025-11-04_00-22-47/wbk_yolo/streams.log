@@ -1,0 +1,56 @@
+[0.626s] Invoking command in '/workspace/src/wbk_yolo': PYTHONPATH=/workspace/build/wbk_yolo/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/wbk_yolo/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/wbk_yolo build --build-base /workspace/build/wbk_yolo/build install --record /workspace/build/wbk_yolo/install.log --single-version-externally-managed install_data
+[0.842s] running egg_info
+[0.846s] creating ../../build/wbk_yolo/wbk_yolo.egg-info
+[0.851s] writing ../../build/wbk_yolo/wbk_yolo.egg-info/PKG-INFO
+[0.852s] writing dependency_links to ../../build/wbk_yolo/wbk_yolo.egg-info/dependency_links.txt
+[0.853s] writing entry points to ../../build/wbk_yolo/wbk_yolo.egg-info/entry_points.txt
+[0.853s] writing requirements to ../../build/wbk_yolo/wbk_yolo.egg-info/requires.txt
+[0.853s] writing top-level names to ../../build/wbk_yolo/wbk_yolo.egg-info/top_level.txt
+[0.854s] writing manifest file '../../build/wbk_yolo/wbk_yolo.egg-info/SOURCES.txt'
+[0.873s] reading manifest file '../../build/wbk_yolo/wbk_yolo.egg-info/SOURCES.txt'
+[0.874s] writing manifest file '../../build/wbk_yolo/wbk_yolo.egg-info/SOURCES.txt'
+[0.874s] running build
+[0.874s] running build_py
+[0.875s] creating /workspace/build/wbk_yolo/build
+[0.875s] creating /workspace/build/wbk_yolo/build/lib
+[0.876s] creating /workspace/build/wbk_yolo/build/lib/wbk_yolo
+[0.876s] copying wbk_yolo/yolo_node.py -> /workspace/build/wbk_yolo/build/lib/wbk_yolo
+[0.876s] copying wbk_yolo/distance_node.py -> /workspace/build/wbk_yolo/build/lib/wbk_yolo
+[0.877s] copying wbk_yolo/field_mask_node.py -> /workspace/build/wbk_yolo/build/lib/wbk_yolo
+[0.878s] copying wbk_yolo/__init__.py -> /workspace/build/wbk_yolo/build/lib/wbk_yolo
+[0.878s] copying wbk_yolo/distance_estimator.py -> /workspace/build/wbk_yolo/build/lib/wbk_yolo
+[0.883s] running install
+[0.887s] running install_lib
+[0.894s] creating /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo
+[0.895s] copying /workspace/build/wbk_yolo/build/lib/wbk_yolo/yolo_node.py -> /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo
+[0.896s] copying /workspace/build/wbk_yolo/build/lib/wbk_yolo/distance_node.py -> /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo
+[0.896s] copying /workspace/build/wbk_yolo/build/lib/wbk_yolo/field_mask_node.py -> /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo
+[0.897s] copying /workspace/build/wbk_yolo/build/lib/wbk_yolo/__init__.py -> /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo
+[0.897s] copying /workspace/build/wbk_yolo/build/lib/wbk_yolo/distance_estimator.py -> /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo
+[0.900s] byte-compiling /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo/yolo_node.py to yolo_node.cpython-312.pyc
+[0.906s] byte-compiling /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo/distance_node.py to distance_node.cpython-312.pyc
+[0.907s] byte-compiling /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo/field_mask_node.py to field_mask_node.cpython-312.pyc
+[0.909s] byte-compiling /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo/__init__.py to __init__.cpython-312.pyc
+[0.909s] byte-compiling /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo/distance_estimator.py to distance_estimator.cpython-312.pyc
+[0.911s] running install_data
+[0.912s] creating /workspace/install/wbk_yolo/share/ament_index
+[0.912s] creating /workspace/install/wbk_yolo/share/ament_index/resource_index
+[0.912s] creating /workspace/install/wbk_yolo/share/ament_index/resource_index/packages
+[0.913s] copying resource/wbk_yolo -> /workspace/install/wbk_yolo/share/ament_index/resource_index/packages
+[0.913s] copying package.xml -> /workspace/install/wbk_yolo/share/wbk_yolo
+[0.914s] creating /workspace/install/wbk_yolo/share/wbk_yolo/launch
+[0.914s] copying launch/vision.launch.py -> /workspace/install/wbk_yolo/share/wbk_yolo/launch
+[0.915s] creating /workspace/install/wbk_yolo/share/wbk_yolo/config
+[0.915s] copying config/params.yaml -> /workspace/install/wbk_yolo/share/wbk_yolo/config
+[0.916s] copying config/camera_info.yaml -> /workspace/install/wbk_yolo/share/wbk_yolo/config
+[0.917s] creating /workspace/install/wbk_yolo/share/wbk_yolo/msg
+[0.917s] copying wbk_yolo/msg/Detection2DArray.msg -> /workspace/install/wbk_yolo/share/wbk_yolo/msg
+[0.918s] copying wbk_yolo/msg/Detection2D.msg -> /workspace/install/wbk_yolo/share/wbk_yolo/msg
+[0.919s] running install_egg_info
+[0.929s] Copying ../../build/wbk_yolo/wbk_yolo.egg-info to /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo-1.0.0-py3.12.egg-info
+[0.933s] running install_scripts
+[1.006s] Installing distance_node script to /workspace/install/wbk_yolo/lib/wbk_yolo
+[1.006s] Installing field_mask_node script to /workspace/install/wbk_yolo/lib/wbk_yolo
+[1.007s] Installing yolo_node script to /workspace/install/wbk_yolo/lib/wbk_yolo
+[1.007s] writing list of installed files to '/workspace/build/wbk_yolo/install.log'
+[1.028s] Invoked command in '/workspace/src/wbk_yolo' returned '0': PYTHONPATH=/workspace/build/wbk_yolo/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/wbk_yolo/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../../build/wbk_yolo build --build-base /workspace/build/wbk_yolo/build install --record /workspace/build/wbk_yolo/install.log --single-version-externally-managed install_data

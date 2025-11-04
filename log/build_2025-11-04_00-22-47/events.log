@@ -1,0 +1,71 @@
+[0.000000] (-) TimerEvent: {}
+[0.000253] (wbk_yolo) JobQueued: {'identifier': 'wbk_yolo', 'dependencies': OrderedDict()}
+[0.001363] (wbk_yolo) JobStarted: {'identifier': 'wbk_yolo'}
+[0.098537] (-) TimerEvent: {}
+[0.201251] (-) TimerEvent: {}
+[0.302991] (-) TimerEvent: {}
+[0.410229] (-) TimerEvent: {}
+[0.513710] (-) TimerEvent: {}
+[0.616329] (-) TimerEvent: {}
+[0.617191] (wbk_yolo) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'egg_info', '--egg-base', '../../build/wbk_yolo', 'build', '--build-base', '/workspace/build/wbk_yolo/build', 'install', '--record', '/workspace/build/wbk_yolo/install.log', '--single-version-externally-managed', 'install_data'], 'cwd': '/workspace/src/wbk_yolo', 'env': {'HOSTNAME': 'docker-desktop', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/root', 'OLDPWD': '/workspace', 'ROS_PYTHON_VERSION': '3', 'ROS_DISTRO': 'jazzy', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'TERM': 'xterm', 'PATH': '/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'LANG': 'C.UTF-8', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'PWD': '/workspace/build/wbk_yolo', 'LC_ALL': 'C.UTF-8', 'PYTHONPATH': '/workspace/build/wbk_yolo/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/workspace/install/wbk_yolo/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor'}, 'shell': False}
+[0.717237] (-) TimerEvent: {}
+[0.821256] (-) TimerEvent: {}
+[0.842860] (wbk_yolo) StdoutLine: {'line': b'running egg_info\n'}
+[0.843708] (wbk_yolo) StdoutLine: {'line': b'creating ../../build/wbk_yolo/wbk_yolo.egg-info\n'}
+[0.852122] (wbk_yolo) StdoutLine: {'line': b'writing ../../build/wbk_yolo/wbk_yolo.egg-info/PKG-INFO\n'}
+[0.853088] (wbk_yolo) StdoutLine: {'line': b'writing dependency_links to ../../build/wbk_yolo/wbk_yolo.egg-info/dependency_links.txt\n'}
+[0.853930] (wbk_yolo) StdoutLine: {'line': b'writing entry points to ../../build/wbk_yolo/wbk_yolo.egg-info/entry_points.txt\n'}
+[0.854443] (wbk_yolo) StdoutLine: {'line': b'writing requirements to ../../build/wbk_yolo/wbk_yolo.egg-info/requires.txt\n'}
+[0.854770] (wbk_yolo) StdoutLine: {'line': b'writing top-level names to ../../build/wbk_yolo/wbk_yolo.egg-info/top_level.txt\n'}
+[0.855231] (wbk_yolo) StdoutLine: {'line': b"writing manifest file '../../build/wbk_yolo/wbk_yolo.egg-info/SOURCES.txt'\n"}
+[0.873823] (wbk_yolo) StdoutLine: {'line': b"reading manifest file '../../build/wbk_yolo/wbk_yolo.egg-info/SOURCES.txt'\n"}
+[0.875126] (wbk_yolo) StdoutLine: {'line': b"writing manifest file '../../build/wbk_yolo/wbk_yolo.egg-info/SOURCES.txt'\n"}
+[0.875507] (wbk_yolo) StdoutLine: {'line': b'running build\n'}
+[0.875805] (wbk_yolo) StdoutLine: {'line': b'running build_py\n'}
+[0.876127] (wbk_yolo) StdoutLine: {'line': b'creating /workspace/build/wbk_yolo/build\n'}
+[0.876579] (wbk_yolo) StdoutLine: {'line': b'creating /workspace/build/wbk_yolo/build/lib\n'}
+[0.876940] (wbk_yolo) StdoutLine: {'line': b'creating /workspace/build/wbk_yolo/build/lib/wbk_yolo\n'}
+[0.877197] (wbk_yolo) StdoutLine: {'line': b'copying wbk_yolo/yolo_node.py -> /workspace/build/wbk_yolo/build/lib/wbk_yolo\n'}
+[0.877775] (wbk_yolo) StdoutLine: {'line': b'copying wbk_yolo/distance_node.py -> /workspace/build/wbk_yolo/build/lib/wbk_yolo\n'}
+[0.878430] (wbk_yolo) StdoutLine: {'line': b'copying wbk_yolo/field_mask_node.py -> /workspace/build/wbk_yolo/build/lib/wbk_yolo\n'}
+[0.879074] (wbk_yolo) StdoutLine: {'line': b'copying wbk_yolo/__init__.py -> /workspace/build/wbk_yolo/build/lib/wbk_yolo\n'}
+[0.879570] (wbk_yolo) StdoutLine: {'line': b'copying wbk_yolo/distance_estimator.py -> /workspace/build/wbk_yolo/build/lib/wbk_yolo\n'}
+[0.883191] (wbk_yolo) StdoutLine: {'line': b'running install\n'}
+[0.885776] (wbk_yolo) StdoutLine: {'line': b'running install_lib\n'}
+[0.895493] (wbk_yolo) StdoutLine: {'line': b'creating /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo\n'}
+[0.895848] (wbk_yolo) StdoutLine: {'line': b'copying /workspace/build/wbk_yolo/build/lib/wbk_yolo/yolo_node.py -> /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo\n'}
+[0.896781] (wbk_yolo) StdoutLine: {'line': b'copying /workspace/build/wbk_yolo/build/lib/wbk_yolo/distance_node.py -> /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo\n'}
+[0.897697] (wbk_yolo) StdoutLine: {'line': b'copying /workspace/build/wbk_yolo/build/lib/wbk_yolo/field_mask_node.py -> /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo\n'}
+[0.898274] (wbk_yolo) StdoutLine: {'line': b'copying /workspace/build/wbk_yolo/build/lib/wbk_yolo/__init__.py -> /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo\n'}
+[0.898838] (wbk_yolo) StdoutLine: {'line': b'copying /workspace/build/wbk_yolo/build/lib/wbk_yolo/distance_estimator.py -> /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo\n'}
+[0.900264] (wbk_yolo) StdoutLine: {'line': b'byte-compiling /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo/yolo_node.py to yolo_node.cpython-312.pyc\n'}
+[0.906219] (wbk_yolo) StdoutLine: {'line': b'byte-compiling /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo/distance_node.py to distance_node.cpython-312.pyc\n'}
+[0.908306] (wbk_yolo) StdoutLine: {'line': b'byte-compiling /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo/field_mask_node.py to field_mask_node.cpython-312.pyc\n'}
+[0.909942] (wbk_yolo) StdoutLine: {'line': b'byte-compiling /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo/__init__.py to __init__.cpython-312.pyc\n'}
+[0.910641] (wbk_yolo) StdoutLine: {'line': b'byte-compiling /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo/distance_estimator.py to distance_estimator.cpython-312.pyc\n'}
+[0.912805] (wbk_yolo) StdoutLine: {'line': b'running install_data\n'}
+[0.913193] (wbk_yolo) StdoutLine: {'line': b'creating /workspace/install/wbk_yolo/share/ament_index\n'}
+[0.913572] (wbk_yolo) StdoutLine: {'line': b'creating /workspace/install/wbk_yolo/share/ament_index/resource_index\n'}
+[0.913795] (wbk_yolo) StdoutLine: {'line': b'creating /workspace/install/wbk_yolo/share/ament_index/resource_index/packages\n'}
+[0.914009] (wbk_yolo) StdoutLine: {'line': b'copying resource/wbk_yolo -> /workspace/install/wbk_yolo/share/ament_index/resource_index/packages\n'}
+[0.914227] (wbk_yolo) StdoutLine: {'line': b'copying package.xml -> /workspace/install/wbk_yolo/share/wbk_yolo\n'}
+[0.914995] (wbk_yolo) StdoutLine: {'line': b'creating /workspace/install/wbk_yolo/share/wbk_yolo/launch\n'}
+[0.915464] (wbk_yolo) StdoutLine: {'line': b'copying launch/vision.launch.py -> /workspace/install/wbk_yolo/share/wbk_yolo/launch\n'}
+[0.916313] (wbk_yolo) StdoutLine: {'line': b'creating /workspace/install/wbk_yolo/share/wbk_yolo/config\n'}
+[0.916724] (wbk_yolo) StdoutLine: {'line': b'copying config/params.yaml -> /workspace/install/wbk_yolo/share/wbk_yolo/config\n'}
+[0.917428] (wbk_yolo) StdoutLine: {'line': b'copying config/camera_info.yaml -> /workspace/install/wbk_yolo/share/wbk_yolo/config\n'}
+[0.918264] (wbk_yolo) StdoutLine: {'line': b'creating /workspace/install/wbk_yolo/share/wbk_yolo/msg\n'}
+[0.918553] (wbk_yolo) StdoutLine: {'line': b'copying wbk_yolo/msg/Detection2DArray.msg -> /workspace/install/wbk_yolo/share/wbk_yolo/msg\n'}
+[0.919214] (wbk_yolo) StdoutLine: {'line': b'copying wbk_yolo/msg/Detection2D.msg -> /workspace/install/wbk_yolo/share/wbk_yolo/msg\n'}
+[0.920365] (wbk_yolo) StdoutLine: {'line': b'running install_egg_info\n'}
+[0.924148] (-) TimerEvent: {}
+[0.930159] (wbk_yolo) StdoutLine: {'line': b'Copying ../../build/wbk_yolo/wbk_yolo.egg-info to /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo-1.0.0-py3.12.egg-info\n'}
+[0.934606] (wbk_yolo) StdoutLine: {'line': b'running install_scripts\n'}
+[1.006690] (wbk_yolo) StdoutLine: {'line': b'Installing distance_node script to /workspace/install/wbk_yolo/lib/wbk_yolo\n'}
+[1.007574] (wbk_yolo) StdoutLine: {'line': b'Installing field_mask_node script to /workspace/install/wbk_yolo/lib/wbk_yolo\n'}
+[1.008073] (wbk_yolo) StdoutLine: {'line': b'Installing yolo_node script to /workspace/install/wbk_yolo/lib/wbk_yolo\n'}
+[1.008849] (wbk_yolo) StdoutLine: {'line': b"writing list of installed files to '/workspace/build/wbk_yolo/install.log'\n"}
+[1.026229] (-) TimerEvent: {}
+[1.028977] (wbk_yolo) CommandEnded: {'returncode': 0}
+[1.041799] (wbk_yolo) JobEnded: {'identifier': 'wbk_yolo', 'rc': 0}
+[1.043447] (-) EventReactorShutdown: {}

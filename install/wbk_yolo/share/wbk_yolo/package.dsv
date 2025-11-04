@@ -1,0 +1,6 @@
+source;share/wbk_yolo/hook/pythonpath.ps1
+source;share/wbk_yolo/hook/pythonpath.dsv
+source;share/wbk_yolo/hook/pythonpath.sh
+source;share/wbk_yolo/hook/ament_prefix_path.ps1
+source;share/wbk_yolo/hook/ament_prefix_path.dsv
+source;share/wbk_yolo/hook/ament_prefix_path.sh

@@ -1,0 +1,21 @@
+running egg_info
+writing ../../build/wbk_yolo/wbk_yolo.egg-info/PKG-INFO
+writing dependency_links to ../../build/wbk_yolo/wbk_yolo.egg-info/dependency_links.txt
+writing entry points to ../../build/wbk_yolo/wbk_yolo.egg-info/entry_points.txt
+writing requirements to ../../build/wbk_yolo/wbk_yolo.egg-info/requires.txt
+writing top-level names to ../../build/wbk_yolo/wbk_yolo.egg-info/top_level.txt
+reading manifest file '../../build/wbk_yolo/wbk_yolo.egg-info/SOURCES.txt'
+writing manifest file '../../build/wbk_yolo/wbk_yolo.egg-info/SOURCES.txt'
+running build
+running build_py
+running install
+running install_lib
+running install_data
+running install_egg_info
+removing '/workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo-1.0.0-py3.12.egg-info' (and everything under it)
+Copying ../../build/wbk_yolo/wbk_yolo.egg-info to /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo-1.0.0-py3.12.egg-info
+running install_scripts
+Installing distance_node script to /workspace/install/wbk_yolo/lib/wbk_yolo
+Installing field_mask_node script to /workspace/install/wbk_yolo/lib/wbk_yolo
+Installing yolo_node script to /workspace/install/wbk_yolo/lib/wbk_yolo
+writing list of installed files to '/workspace/build/wbk_yolo/install.log'

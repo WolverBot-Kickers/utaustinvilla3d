@@ -1,0 +1,4 @@
+[console_scripts]
+distance_node = wbk_yolo.distance_node:main
+field_mask_node = wbk_yolo.field_mask_node:main
+yolo_node = wbk_yolo.yolo_node:main

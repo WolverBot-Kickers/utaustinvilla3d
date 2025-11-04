@@ -1,0 +1,54 @@
+running egg_info
+creating ../../build/wbk_yolo/wbk_yolo.egg-info
+writing ../../build/wbk_yolo/wbk_yolo.egg-info/PKG-INFO
+writing dependency_links to ../../build/wbk_yolo/wbk_yolo.egg-info/dependency_links.txt
+writing entry points to ../../build/wbk_yolo/wbk_yolo.egg-info/entry_points.txt
+writing requirements to ../../build/wbk_yolo/wbk_yolo.egg-info/requires.txt
+writing top-level names to ../../build/wbk_yolo/wbk_yolo.egg-info/top_level.txt
+writing manifest file '../../build/wbk_yolo/wbk_yolo.egg-info/SOURCES.txt'
+reading manifest file '../../build/wbk_yolo/wbk_yolo.egg-info/SOURCES.txt'
+writing manifest file '../../build/wbk_yolo/wbk_yolo.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /workspace/build/wbk_yolo/build
+creating /workspace/build/wbk_yolo/build/lib
+creating /workspace/build/wbk_yolo/build/lib/wbk_yolo
+copying wbk_yolo/yolo_node.py -> /workspace/build/wbk_yolo/build/lib/wbk_yolo
+copying wbk_yolo/distance_node.py -> /workspace/build/wbk_yolo/build/lib/wbk_yolo
+copying wbk_yolo/field_mask_node.py -> /workspace/build/wbk_yolo/build/lib/wbk_yolo
+copying wbk_yolo/__init__.py -> /workspace/build/wbk_yolo/build/lib/wbk_yolo
+copying wbk_yolo/distance_estimator.py -> /workspace/build/wbk_yolo/build/lib/wbk_yolo
+running install
+running install_lib
+creating /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo
+copying /workspace/build/wbk_yolo/build/lib/wbk_yolo/yolo_node.py -> /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo
+copying /workspace/build/wbk_yolo/build/lib/wbk_yolo/distance_node.py -> /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo
+copying /workspace/build/wbk_yolo/build/lib/wbk_yolo/field_mask_node.py -> /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo
+copying /workspace/build/wbk_yolo/build/lib/wbk_yolo/__init__.py -> /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo
+copying /workspace/build/wbk_yolo/build/lib/wbk_yolo/distance_estimator.py -> /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo
+byte-compiling /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo/yolo_node.py to yolo_node.cpython-312.pyc
+byte-compiling /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo/distance_node.py to distance_node.cpython-312.pyc
+byte-compiling /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo/field_mask_node.py to field_mask_node.cpython-312.pyc
+byte-compiling /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo/__init__.py to __init__.cpython-312.pyc
+byte-compiling /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo/distance_estimator.py to distance_estimator.cpython-312.pyc
+running install_data
+creating /workspace/install/wbk_yolo/share/ament_index
+creating /workspace/install/wbk_yolo/share/ament_index/resource_index
+creating /workspace/install/wbk_yolo/share/ament_index/resource_index/packages
+copying resource/wbk_yolo -> /workspace/install/wbk_yolo/share/ament_index/resource_index/packages
+copying package.xml -> /workspace/install/wbk_yolo/share/wbk_yolo
+creating /workspace/install/wbk_yolo/share/wbk_yolo/launch
+copying launch/vision.launch.py -> /workspace/install/wbk_yolo/share/wbk_yolo/launch
+creating /workspace/install/wbk_yolo/share/wbk_yolo/config
+copying config/params.yaml -> /workspace/install/wbk_yolo/share/wbk_yolo/config
+copying config/camera_info.yaml -> /workspace/install/wbk_yolo/share/wbk_yolo/config
+creating /workspace/install/wbk_yolo/share/wbk_yolo/msg
+copying wbk_yolo/msg/Detection2DArray.msg -> /workspace/install/wbk_yolo/share/wbk_yolo/msg
+copying wbk_yolo/msg/Detection2D.msg -> /workspace/install/wbk_yolo/share/wbk_yolo/msg
+running install_egg_info
+Copying ../../build/wbk_yolo/wbk_yolo.egg-info to /workspace/install/wbk_yolo/lib/python3.12/site-packages/wbk_yolo-1.0.0-py3.12.egg-info
+running install_scripts
+Installing distance_node script to /workspace/install/wbk_yolo/lib/wbk_yolo
+Installing field_mask_node script to /workspace/install/wbk_yolo/lib/wbk_yolo
+Installing yolo_node script to /workspace/install/wbk_yolo/lib/wbk_yolo
+writing list of installed files to '/workspace/build/wbk_yolo/install.log'
