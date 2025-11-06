@@ -57,7 +57,27 @@ bool RX64Motor::init() {
     }
 
     // Step 4: Enable torque (like setIdleMode(kBrake))
-    enableTorque(true);
+    // Note: We enable torque before setting is_initialized to allow this call
+    uint8_t error = 0;
+    int comm_result = packetHandler->write1ByteTxRx(
+        portHandler, 
+        motor_id, 
+        ADDR_TORQUE_ENABLE, 
+        TORQUE_ENABLE, 
+        &error
+    );
+
+    if (comm_result != COMM_SUCCESS) {
+        printf("RX64Motor: Communication error enabling torque: %s\n", 
+               packetHandler->getTxRxResult(comm_result));
+        portHandler->closePort();
+        return false;
+    } else if (error != 0) {
+        printf("RX64Motor: Motor error enabling torque: %s\n", 
+               packetHandler->getRxPacketError(error));
+        portHandler->closePort();
+        return false;
+    }
 
     is_initialized = true;
     return true;

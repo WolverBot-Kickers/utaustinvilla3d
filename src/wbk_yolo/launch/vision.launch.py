@@ -146,6 +146,21 @@ def generate_launch_description():
         ]
     )
     
+    # Distance estimation node
+    distance_node = Node(
+        package='wbk_yolo',
+        executable='distance_node',
+        name='distance_node',
+        output='screen',
+        parameters=[
+            {
+                'camera_info_topic': '/camera/camera_info',
+                'ball_detections_topic': '/vision/ball_dets',
+                'frame_id': LaunchConfiguration('frame_id'),
+            }
+        ]
+    )
+    
     # USB camera node (optional)
     usb_camera_node = Node(
         package='usb_cam',
@@ -218,6 +233,7 @@ def generate_launch_description():
         # Vision nodes
         yolo_node,
         field_mask_node,
+        distance_node,
         
         # Optional camera node
         usb_camera_node,
