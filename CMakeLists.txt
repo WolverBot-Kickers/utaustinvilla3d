@@ -28,7 +28,9 @@ ${CORE_PATH}
 ${RCSSNET3D_INCLUDE_DIR}
 )
 
-set(CORE_FILES
+add_compile_definitions(SRC_DIR="${CMAKE_CURRENT_SOURCE_DIR}")
+
+set(CORE_FILES #utwalk files
   ${CORE_PATH}/MotionCore.cpp
   ${CORE_PATH}/Module.cpp  
   ${CORE_PATH}/common/NMatrix.cpp 
@@ -52,7 +54,13 @@ set(CORE_FILES
   ${CORE_PATH}/motion/WalkEngineParameters.cpp 
 )
 
-set(SRCS
+set(ROS_SRC 
+  ros_src/behaviors/nao_node.cpp
+  ros_src/behaviors/custom_node.cpp
+  ros_src/ros_entry.cpp
+)
+
+set(SRCS #utaustin files
   behaviors/behavior.cc
   behaviors/naobehavior.cc
   behaviors/checkfall.cc 
@@ -82,7 +90,9 @@ set(SRCS
   kalman/OrigKalmanFilter.cpp
   optimization/optimizationbehaviors.cc
   stats/recordstatsbehavior.cc
+  ${ROS_SRC}
 )
+
 
 # set(BINARY agentspark)
 
@@ -112,16 +122,16 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 
 add_definitions(-D_GLIBCXX_USE_CXX11_ABI=1)
-add_executable(naobehavior 
-  ros_src/ros2_nao.cpp 
+add_executable(agent 
+  ros_src/ros_entry.cpp
   ${SRCS}
 )
-ament_target_dependencies(naobehavior rclcpp Boost Threads)
-target_link_libraries(naobehavior Rcssnet3d_lib)
-set_property(TARGET naobehavior PROPERTY CXX_STANDARD 11)
+ament_target_dependencies(agent rclcpp Boost Threads)
+target_link_libraries(agent Rcssnet3d_lib)
+set_property(TARGET agent PROPERTY CXX_STANDARD 11)
 
 install(TARGETS
-  naobehavior
+  agent
   DESTINATION lib/${PROJECT_NAME}
 )
 

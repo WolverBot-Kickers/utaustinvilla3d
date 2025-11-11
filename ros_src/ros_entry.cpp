@@ -1,5 +1,6 @@
 #include "rclcpp/rclcpp.hpp"
-#include "ros2_nao.hpp"
+#include "behaviors/nao_node.hpp"
+#include "behaviors/custom_node.hpp"
 #include <errno.h>
 #include <signal.h>
 #include <string>
@@ -9,15 +10,6 @@
 //#include <rcssnet/udpsocket.hpp>
 #include <rcssnet/exception.hpp>
 #include <netinet/in.h>
-#include "../behaviors/behavior.h"
-#include "../behaviors/naobehavior.h"
-#include "../optimization/optimizationbehaviors.h"
-#include "../behaviors/pkbehaviors.h"
-#include "../behaviors/simplesoccer.h"
-#include "../behaviors/gazebobehavior.h"
-#include "../stats/recordstatsbehavior.h"
-
-#define SRC_DIR "/home/wbk/wolverbot/src/utaustinvilla3d"
 
 using namespace rcss::net;
 using namespace std;
@@ -44,13 +36,6 @@ int agentBodyType = 0;
 
 // Global variable if using the fat proxy
 bool fFatProxy = false;
-Ros2NaoBehavior::Ros2NaoBehavior(const std::string teamName, int uNum, 
-          const map<string, string>& namedParams_, const string& rsg_)
-                   : Node(teamName + std::to_string(uNum)), 
-                    NaoBehavior( teamName,  uNum, namedParams_,  rsg_)
-{
-
-}
 // SIGINT handler prototype
 extern "C" void handler(int sig)
 {
@@ -275,6 +260,9 @@ void ReadOptions(int argc, char* argv[])
         else if (strcmp(argv[i], "--recordstats") == 0) {
             agentType = "recordstats";
         }
+        else if (strcmp(argv[i], "--custombehavior") == 0) {
+            agentType = "custom";
+        }
         else if (strcmp(argv[i], "--fatproxy") == 0) {
             fFatProxy = true;
         }
@@ -287,7 +275,7 @@ void FillOptions()
     teamName = "UTAustinVilla_Base";
     uNum = 0; // Value of 0 means choose next available number
 
-    string inputsFile = "/home/wbk/wolverbot/src/utaustinvilla3d/paramfiles/defaultParams.txt";
+    string inputsFile = SRC_DIR "/paramfiles/defaultParams.txt";
     LoadParams(inputsFile);
 }
 
@@ -520,9 +508,15 @@ bool GetMessage(string& msg)
 
 void Run()
 {
-    
-    std::shared_ptr<Ros2NaoBehavior> behavior = std::make_shared<Ros2NaoBehavior>(teamName, uNum, namedParams, rsg);
-    
+  std::shared_ptr<NaoBehaviorNode> behavior;
+  if (agentType=="naoagent"){
+    behavior = std::make_shared<NaoBehaviorNode>(teamName, uNum, namedParams, rsg);
+  }
+  else if (agentType=="custom")
+  {
+    behavior = std::make_shared<CustomBehaviorNode>(teamName, uNum, namedParams, rsg);
+  }
+
     RCLCPP_INFO(behavior->get_logger(), "HEY!!!!! THIS INITS!!!!");
     
 
@@ -556,17 +550,7 @@ main(int argc, char* argv[])
     {
         PrintGreeting();
 
-        try 
-        {
-          rclcpp::init(argc, argv);
-        }
-        catch (char const* c)
-        {
-          cerr << "rclcpp init error" << endl;
-          return 1;
-        }
-
-        FillOptions();
+        ReadOptions(argc, argv);
 
         if (!Init())
         {

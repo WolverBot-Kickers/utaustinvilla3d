@@ -90,11 +90,11 @@ NaoBehavior(const std::string teamName, int uNum, const map<string, string>& nam
 
     // TODO: Treat paths more correctly? (system independent way)
     try {
-        readSkillsFromFile( "./skills/stand.skl" );
-        readSkillsFromFile( "./skills/kick.skl" );
+        readSkillsFromFile( SRC_DIR "/skills/stand.skl" );
+        readSkillsFromFile( SRC_DIR "/skills/kick.skl" );
 
         // ik skills
-        readSkillsFromFile( "./skills/kick_ik_0.skl" );
+        readSkillsFromFile( SRC_DIR "/skills/kick_ik_0.skl" );
         // end ik skills
 
     }
