@@ -105,7 +105,7 @@ cd $DIR
 
 #unum determines the agent number
 
-"$BINARY_DIR/$AGENT_BINARY" $opt --unum 13 --paramsfile paramfiles/defaultParams_t0.txt --test &#> /dev/null &
+"$BINARY_DIR/$AGENT_BINARY" $opt --unum 11 --paramsfile paramfiles/defaultParams_t0.txt --test &#> /dev/null &
 
 sleep 2
 
