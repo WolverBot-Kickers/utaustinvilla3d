@@ -527,6 +527,9 @@ void Run()
         behavior = new RecordStatsBehavior(teamName, uNum, namedParams, rsg,
                                            outputFile);
     }
+    else if ( agentType == "test" ) {
+        behavior = new NaoBehavior(teamName, uNum, namedParams, rsg); //TODO create a param file
+    }
     else {
         throw "unknown agent type";
     }
