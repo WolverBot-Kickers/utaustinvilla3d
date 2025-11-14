@@ -49,6 +49,11 @@ set(CORE_FILES
   ${CORE_PATH}/motion/WalkEngineParameters.cpp 
 )
 
+set(PATHPLANNING_FILES
+  pathplanning/Astar.cpp
+  pathplanning/rosAstarWrapper.cpp
+)
+
 set(SRCS
   main.cc 
   behaviors/behavior.cc
@@ -81,6 +86,7 @@ set(SRCS
   kalman/OrigKalmanFilter.cpp
   optimization/optimizationbehaviors.cc
   stats/recordstatsbehavior.cc
+  ${PATHPLANNING_FILES}
 )
 
 set(BINARY agentspark)
