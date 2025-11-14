@@ -6,3 +6,11 @@ CMakeFiles
 Makefile
 agentspark
 libs/*.so*
+
+# Ament
+AMENT*
+ament_*
+build/
+log/
+install/
+CTest*

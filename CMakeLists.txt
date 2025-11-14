@@ -90,31 +90,30 @@ set(SRCS #utaustin files
   kalman/OrigKalmanFilter.cpp
   optimization/optimizationbehaviors.cc
   stats/recordstatsbehavior.cc
-  ${ROS_SRC}
 )
 
 
-# set(BINARY agentspark)
+set(BINARY agentspark)
 
-# add_executable(${BINARY}
-# main.cc 
-# ${SRCS}
-# )
+add_executable(${BINARY}
+main.cc 
+${SRCS}
+)
 
-# target_link_libraries(${BINARY}
-# ${RCSSNET3D_LIBRARY}
-# ${Boost_SYSTEM_LIBRARY}
-# dl
-# ${CMAKE_THREAD_LIBS_INIT}
-# rt 
-# )
+target_link_libraries(${BINARY}
+${RCSSNET3D_LIBRARY}
+${Boost_SYSTEM_LIBRARY}
+dl
+${CMAKE_THREAD_LIBS_INIT}
+rt 
+)
 
 # Automatically copy linked shared objects to libs directory after evey build
-#add_custom_command(TARGET ${BINARY}
-#  POST_BUILD
-#  COMMAND ${CMAKE_SOURCE_DIR}/scripts/copy_libs.sh ARGS ${BINARY} libs
-#)
-#set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES libs)
+add_custom_command(TARGET ${BINARY}
+ POST_BUILD
+ COMMAND ${CMAKE_SOURCE_DIR}/scripts/copy_libs.sh ARGS ${BINARY} libs
+)
+set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES libs)
 
 #------------------------------ROS2 SECTION------------------------------
 
@@ -122,16 +121,25 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 
 add_definitions(-D_GLIBCXX_USE_CXX11_ABI=1)
-add_executable(agent 
+add_executable(agent_ros 
   ros_src/ros_entry.cpp
+  ${ROS_SRC}
   ${SRCS}
 )
-ament_target_dependencies(agent rclcpp Boost Threads)
-target_link_libraries(agent Rcssnet3d_lib)
-set_property(TARGET agent PROPERTY CXX_STANDARD 11)
+
+ament_target_dependencies(agent_ros rclcpp Boost Threads)
+target_link_libraries(agent_ros Rcssnet3d_lib)
+set_property(TARGET agent_ros PROPERTY CXX_STANDARD 11)
+
 
 install(TARGETS
-  agent
+  ${BINARY}
+  DESTINATION 
+  ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+install(TARGETS
+  agent_ros
   DESTINATION lib/${PROJECT_NAME}
 )
 

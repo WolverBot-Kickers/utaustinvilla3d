@@ -1,6 +1,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "behaviors/nao_node.hpp"
 #include "behaviors/custom_node.hpp"
+#include "behaviors/simplesoccer_node.hpp"
 #include <errno.h>
 #include <signal.h>
 #include <string>
@@ -135,6 +136,7 @@ int uNum;
 string outputFile(""); // For optimization
 string agentType("naoagent");
 string rsg("rsg/agent/nao/nao.rsg");
+string inputsFile(SRC_DIR "/paramfiles/defaultParams.txt");
 void ReadOptions(int argc, char* argv[])
 {
     try 
@@ -213,8 +215,7 @@ void ReadOptions(int argc, char* argv[])
                 PrintHelp();
                 exit(0);
             }
-            string inputsFile = argv[i+1];
-            LoadParams(inputsFile);
+            inputsFile = argv[i+1];
         }
         else if (strcmp(argv[i], "--experimentout") == 0) {
             if(i == argc - 1) {
@@ -266,7 +267,9 @@ void ReadOptions(int argc, char* argv[])
         else if (strcmp(argv[i], "--fatproxy") == 0) {
             fFatProxy = true;
         }
+
     } // for-loop
+    LoadParams(inputsFile);
 }
 
 void FillOptions()
