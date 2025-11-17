@@ -13,8 +13,9 @@ TestBehavior( const std::string teamName,
 
 void TestBehavior::
 beam( double& beamX, double& beamY, double& beamAngle ) {
-    beamX = -0.5;
-    beamY = 0;
+    VecPosition space = worldModel->getGoalPost(0);
+    beamX = space.getX();
+    beamY = space.getY();
     beamAngle = 0;
 }
 

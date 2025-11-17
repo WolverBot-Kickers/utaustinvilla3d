@@ -64,6 +64,7 @@ set(SRCS
   behaviors/pkbehaviors.cc
   behaviors/gazebobehavior.cc
   behaviors/simplesoccer.cc
+  behaviors/test.cc
   servercomm/primitives.cc
   parser/parser.cc 
   math/hctmatrix.cc

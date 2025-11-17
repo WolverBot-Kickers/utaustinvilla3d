@@ -14,6 +14,7 @@
 #include "behaviors/simplesoccer.h"
 #include "behaviors/gazebobehavior.h"
 #include "stats/recordstatsbehavior.h"
+#include "behaviors/test.h"
 
 using namespace rcss::net;
 using namespace std;
@@ -258,6 +259,10 @@ void ReadOptions(int argc, char* argv[])
         }
         else if (strcmp(argv[i], "--fatproxy") == 0) {
             fFatProxy = true;
+        }
+        //* needed so we can load our test behevaior file
+        else if (strcmp(argv[i], "--test") == 0) {
+            agentType = "test";
         }
     } // for-loop
 }
@@ -528,7 +533,7 @@ void Run()
                                            outputFile);
     }
     else if ( agentType == "test" ) {
-        behavior = new NaoBehavior(teamName, uNum, namedParams, rsg); //TODO create a param file
+        behavior = new TestBehavior(teamName, uNum, namedParams, rsg); //TODO create a param file
     }
     else {
         throw "unknown agent type";
