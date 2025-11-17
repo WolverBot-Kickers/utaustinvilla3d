@@ -10,6 +10,23 @@
 #include "expansion_groups.h"
 #include "../math/vecposition.h"
 
+
+PathPlanning::PathPlanning() {
+    // Initialize pathLength and numObstacles
+    pathLength = 0;
+    numObstacles = 0;
+    
+    // Initialize costBoard to all zeros
+    for (int i = 0; i < AV_COST_BOARD_X * AV_COST_BOARD_Y; i++) {
+        costBoard[i] = 0;
+    }
+}
+
+PathPlanning::~PathPlanning() {
+    // Destructor - no dynamic memory to clean up since we're using arrays
+    // Could add cleanup code here if needed in the future
+}
+
 /**
  * @brief Converts board index to coordinate pair
 
@@ -419,9 +436,9 @@ VecPosition* PathPlanning::findPathAV(const VecPosition& start, const VecPositio
             delete board[y*AV_COST_BOARD_X + x];
         }
     }
-    if (!reached) {
-        std::cout << "Failed to reach goal node" << std::endl;
-    }
+    // if (!reached) {
+    //     std::cout << "Failed to reach goal node" << std::endl;
+    // }
 
     return finalPathAV;
 
@@ -518,6 +535,10 @@ inline std::pair<int, int> PathPlanning::vecPositionToCoord(VecPosition vec) {
 
 inline VecPosition PathPlanning::coordToVecPosition(int x, int y) {
     return VecPosition(double(x - 150), double(y - 100), 0);
+}
+
+int PathPlanning::getPathLength() {
+    return pathLength;
 }
 
 /*

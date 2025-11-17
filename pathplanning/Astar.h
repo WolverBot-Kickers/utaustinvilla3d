@@ -81,6 +81,7 @@ class PathPlanning {
         //               int goalX, int goalY, 
         //               int* opps, int* teammates,
         //               int ballX, int ballY);
+        int getPathLength();
             
 
     private:
