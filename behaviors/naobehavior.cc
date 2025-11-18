@@ -342,6 +342,30 @@ void NaoBehavior::act() {
             bodyModel->setUseOmniWalk(true);
             switch(currentSkill) {
             case SKILL_WALK_OMNI:
+
+                //TODO REMOVE ASTAR
+                //we do not have an ASTAR algorithm
+                if(index == -1 || index == pathlength) {
+                    index = 0;
+                    PathPlanning pathfinder;
+                    astarpath = pathfinder.findPathAV(this->me, worldModel->getBall(), worldModel);
+                    pathlength = pathfinder.getPathLength();
+                }
+                goToTarget(astarpath[index]);
+
+                std::cout << "pathlength: " << pathlength << "\n";
+
+                std::cout << "index: " << index << "\n";
+                std::cout << "OUR LOC X and Y: " << astarpath[index].getX() << " & " << astarpath[index].getY() << "\n";
+                std::cout << "Me Vel X: " << velocity.x << "\n";
+                std::cout << "Me Vel Y: " << velocity.y << "\n";
+                std::cout << "Me Vel ROT: " << velocity.rot << "\n";
+                std::cout << "BALL X and Y: " << worldModel->getBall().getX() << " & " << worldModel->getBall().getY() << "\n";
+                std::cout << "\n";
+
+                ++index;
+
+                
                 core->move(velocity.paramSet, velocity.x, velocity.y, velocity.rot);
                 break;
             case SKILL_STAND:

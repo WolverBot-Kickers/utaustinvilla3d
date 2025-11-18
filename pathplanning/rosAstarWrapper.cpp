@@ -1,3 +1,4 @@
+/*
 #include <ros/ros.h> //will need for using ROS
 #include <std_msgs> //ROS library for subcriber
 
@@ -8,12 +9,7 @@ class AstarROSWrapper {
     public:
         AstarROSWrapper : {} //default initializer
 
-        /** 
-         * @brief Astar using ROS
-         * 
-         * @param nh this is the NodeHandle which we can use to subcribe to a particular topic
         
-        */
         void callAstar(ros::NodeHandle *nh) {
             //depending on how the ROBOT is handled, we can split this up into multiple topics to subcribe to
 
@@ -41,11 +37,11 @@ class AstarROSWrapper {
             //subscribe to more topics to get relevant data to call the Astar algorithm
 
             //TODO
-            /*
-                If we are out of bounds, call builddirectpath to get back onto the field as soon as possible
+            
+                //If we are out of bounds, call builddirectpath to get back onto the field as soon as possible
 
-                else, call astar
-            */
+                //else, call astar
+            
             
             //TODO astar should return a path that the robot can then publish
             astar(robotx, roboty, goalx, goaly, opponents, teammates, ballx, bally);
@@ -133,3 +129,4 @@ int main(int argc, char **argv) {
 
     //call anything that needs to be cleaned up here after the node stops
 }
+*/

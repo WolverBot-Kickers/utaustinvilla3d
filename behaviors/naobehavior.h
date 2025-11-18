@@ -19,6 +19,9 @@
 #include <memory/SimEffectorBlock.h>
 #include <memory/WalkRequestBlock.h>
 
+//TODO REMOVE ASTAR
+#include "../pathplanning/Astar.h"
+
 using namespace std;
 
 // TODO: Temporary home. Not sure if this this the best place to put this.
@@ -48,6 +51,11 @@ struct WalkVelocity
 class NaoBehavior : public Behavior {
     friend class KickClassifier;
 protected:
+
+    //TODO REMOVE ASTAR
+    int index = -1;
+    VecPosition* astarpath = nullptr;
+    int pathlength = -1;
 
     double currentFallStateStartTime;
 
