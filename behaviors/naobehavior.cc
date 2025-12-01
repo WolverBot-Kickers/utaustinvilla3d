@@ -345,10 +345,11 @@ void NaoBehavior::act() {
 
                 //TODO REMOVE ASTAR
                 //we do not have an ASTAR algorithm
-                if(index == -1 || index == pathlength) {
+                if(index == pathlength) { //index and pathlength default to -1
                     index = 0;
                     PathPlanning pathfinder;
                     astarpath = pathfinder.findPathAV(this->me, worldModel->getBall(), worldModel);
+
                     pathlength = pathfinder.getPathLength();
                 }
                 goToTarget(astarpath[index]);
@@ -356,14 +357,37 @@ void NaoBehavior::act() {
                 std::cout << "pathlength: " << pathlength << "\n";
 
                 std::cout << "index: " << index << "\n";
-                std::cout << "OUR LOC X and Y: " << astarpath[index].getX() << " & " << astarpath[index].getY() << "\n";
-                std::cout << "Me Vel X: " << velocity.x << "\n";
-                std::cout << "Me Vel Y: " << velocity.y << "\n";
-                std::cout << "Me Vel ROT: " << velocity.rot << "\n";
-                std::cout << "BALL X and Y: " << worldModel->getBall().getX() << " & " << worldModel->getBall().getY() << "\n";
+                std::cout << "OUR LOC X and Y: " << this->me.getX() << " & " << this->me.getY() << "\n";
+                //std::cout << "Me Vel X: " << velocity.x << "\n";
+                //std::cout << "Me Vel Y: " << velocity.y << "\n";
+                //std::cout << "Me Vel ROT: " << velocity.rot << "\n";
+                std::cout << "path want X and Y: " << astarpath[index].getX() << " & " << astarpath[index].getY() << "\n";
                 std::cout << "\n";
 
-                ++index;
+                std::cout << "astarpath cartesian mode: ";
+                astarpath[index].show(CARTESIAN);
+                std::cout << "\n";
+
+                if(!debug_RAN) {
+                    debug_RAN = true;
+                    std::cout << "THE PATH WE WANT TO GO TO:\n";
+                    for(int i = 0; i < pathlength; ++i) {
+                        astarpath[i].show(CARTESIAN);
+                    }
+                }
+
+
+                //!works but maybe need to 
+                //! x and y may be flipped
+                //! need higher grid size on our astar
+
+                //double threshold_bound = 0.2;
+                //check if we reach within a certain amount to the current goal
+                if( this->me.getX() < astarpath[index].getX() + 0.2 && this->me.getX() > astarpath[index].getX() - 0.2 
+                    && this->me.getY() < astarpath[index].getY() + 0.2 && this->me.getY() > astarpath[index].getY() - 0.2) {
+                    ++index;
+                    }
+                
 
                 
                 core->move(velocity.paramSet, velocity.x, velocity.y, velocity.rot);
@@ -902,7 +926,7 @@ SkillType NaoBehavior::goToTargetRelative(const VecPosition& targetLoc, const do
 
 
 //Assumes target = z-0. Maybe needs further tuning
-SkillType NaoBehavior::goToTarget(const VecPosition &target) {
+SkillType NaoBehavior:: goToTarget(const VecPosition &target) {
     double distance, angle;
     getTargetDistanceAndAngle(target, distance, angle);
 

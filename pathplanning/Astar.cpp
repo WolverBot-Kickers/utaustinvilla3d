@@ -361,7 +361,7 @@ inline void PathPlanning::checkNeighborAV(
     }    
 }
 
-VecPosition* PathPlanning::findPathAV(const VecPosition& start, const VecPosition& goal, WorldModel* worldModel) {
+std::vector<VecPosition> PathPlanning::findPathAV(const VecPosition& start, const VecPosition& goal, WorldModel* worldModel) {
     getObstaclesAV(worldModel);
     createCostBoardAV();
 
@@ -440,7 +440,12 @@ VecPosition* PathPlanning::findPathAV(const VecPosition& start, const VecPositio
     //     std::cout << "Failed to reach goal node" << std::endl;
     // }
 
-    return finalPathAV;
+    //*return a vector
+    std::vector<VecPosition> vec;
+    for(int i = 0; i < pathLength; ++i) {
+        vec.push_back(finalPathAV[i]);
+    }
+    return vec;
 
 }
 
@@ -537,7 +542,7 @@ inline VecPosition PathPlanning::coordToVecPosition(int x, int y) {
     return VecPosition(double(x - 150), double(y - 100), 0);
 }
 
-int PathPlanning::getPathLength() {
+int PathPlanning::getPathLength() const {
     return pathLength;
 }
 

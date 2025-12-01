@@ -54,8 +54,10 @@ protected:
 
     //TODO REMOVE ASTAR
     int index = -1;
-    VecPosition* astarpath = nullptr;
+    std::vector<VecPosition> astarpath;
     int pathlength = -1;
+    //test variable for debug
+    bool debug_RAN = false;
 
     double currentFallStateStartTime;
 

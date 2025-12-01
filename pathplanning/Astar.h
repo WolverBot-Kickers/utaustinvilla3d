@@ -2,12 +2,12 @@
 
 #define FIELD_LENGTH 9 // meters
 #define FIELD_WIDTH 6  // meters
-#define GRID_RESOLUTION 10 // grid spaces per meter
+#define GRID_RESOLUTION 10 // grid spaces per meter //!change to 100
 #define BORDER_SIZE 2 // meters
 #define AV_FIELD_X 30
 #define AV_FIELD_Y 20
-#define AV_COST_BOARD_X AV_FIELD_X * GRID_RESOLUTION
-#define AV_COST_BOARD_Y AV_FIELD_Y * GRID_RESOLUTION
+#define AV_COST_BOARD_X (AV_FIELD_X * GRID_RESOLUTION)
+#define AV_COST_BOARD_Y (AV_FIELD_Y * GRID_RESOLUTION)
 
 #define TOTAL_LENGTH (FIELD_LENGTH + 2 * BORDER_SIZE)
 #define TOTAL_WIDTH (FIELD_WIDTH + 2 * BORDER_SIZE)
@@ -73,7 +73,7 @@ class PathPlanning {
 
         ~PathPlanning();
 
-        VecPosition* findPathAV(const VecPosition& start, 
+        std::vector<VecPosition> findPathAV(const VecPosition& start, 
                          const VecPosition& goal,
                          WorldModel* worldModel);
         
@@ -81,7 +81,7 @@ class PathPlanning {
         //               int goalX, int goalY, 
         //               int* opps, int* teammates,
         //               int ballX, int ballY);
-        int getPathLength();
+        int getPathLength() const;
             
 
     private:
