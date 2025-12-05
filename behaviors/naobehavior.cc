@@ -5,6 +5,7 @@
 #include <cmath>
 #include <cctype>
 #include <exception>
+#include <string>
 
 #include "../skills/skillparser.h"
 #include "../rvdraw/rvdraw.h"
@@ -368,13 +369,12 @@ void NaoBehavior::act() {
                 astarpath[index].show(CARTESIAN);
                 std::cout << "\n";
 
-                if(!debug_RAN) {
-                    debug_RAN = true;
-                    std::cout << "THE PATH WE WANT TO GO TO:\n";
-                    for(int i = 0; i < pathlength; ++i) {
-                        astarpath[i].show(CARTESIAN);
-                    }
+                worldModel->getRVSender()->clear();
+                for(int i = index; i < pathlength; ++i) {
+                    // astarpath[i].show(CARTESIAN);
+                    worldModel->getRVSender()->drawPoint(std::to_string(index), astarpath[index].getX(), astarpath[index].getY(), 0.2, 100.0, 0.0, 0.0);
                 }
+                
 
 
                 //!works but maybe need to 
