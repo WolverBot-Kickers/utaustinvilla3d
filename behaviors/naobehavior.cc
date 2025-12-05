@@ -348,7 +348,9 @@ void NaoBehavior::act() {
                 if(index == pathlength) { //index and pathlength default to -1
                     index = 0;
                     PathPlanning pathfinder;
+                    
                     astarpath = pathfinder.findPathAV(this->me, worldModel->getBall(), worldModel);
+                    //astarpath = pathfinder.findPathAV(this->me, VecPosition(0,0,0), worldModel);
 
                     pathlength = pathfinder.getPathLength();
                 }
@@ -362,11 +364,11 @@ void NaoBehavior::act() {
                 //std::cout << "Me Vel Y: " << velocity.y << "\n";
                 //std::cout << "Me Vel ROT: " << velocity.rot << "\n";
                 std::cout << "path want X and Y: " << astarpath[index].getX() << " & " << astarpath[index].getY() << "\n";
-                std::cout << "\n";
+                //std::cout << "\n";
 
-                std::cout << "astarpath cartesian mode: ";
-                astarpath[index].show(CARTESIAN);
-                std::cout << "\n";
+                std::cout << "our goal: ";
+                //astarpath[index].show(CARTESIAN);
+                std::cout << worldModel->getBall().getX()  << " " << worldModel->getBall().getY() << "\n";
 
                 if(!debug_RAN) {
                     debug_RAN = true;
