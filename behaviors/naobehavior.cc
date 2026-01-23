@@ -364,7 +364,7 @@ void NaoBehavior::act() {
                 //std::cout << "Me Vel X: " << velocity.x << "\n";
                 //std::cout << "Me Vel Y: " << velocity.y << "\n";
                 //std::cout << "Me Vel ROT: " << velocity.rot << "\n";
-                std::cout << "path want X and Y: " << astarpath[index].getX() << " & " << astarpath[index].getY() << "\n";
+                std::cout << "Current Path Waypoint X and Y: " << astarpath[index].getX() << " & " << astarpath[index].getY() << "\n";
                 //std::cout << "\n";
 
                 std::cout << "our goal: ";
@@ -374,7 +374,9 @@ void NaoBehavior::act() {
                 worldModel->getRVSender()->clear();
                 for(int i = index; i < pathlength; ++i) {
                     // astarpath[i].show(CARTESIAN);
-                    worldModel->getRVSender()->drawPoint(std::to_string(index), astarpath[index].getX(), astarpath[index].getY(), 0.2, 100.0, 0.0, 0.0);
+                    std::cout << "i: " << i << std::endl;
+                    worldModel->getRVSender()->drawSphere(std::to_string(i), astarpath[i].getX(), astarpath[i].getY(), 0.05f, 0.05f, RVSender::MAGENTA);
+                    //worldModel->getRVSender()->drawLine(std::to_string(i), astarpath[i].getX(), astarpath[i].getY(), astarpath[i+1].getX(), astarpath[i+1].getY(), RVSender::MAGENTA);
                 }
                 
 

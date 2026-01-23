@@ -535,11 +535,13 @@ void PathPlanning::buildBestPathAV(Node* node) {
 }
 
 inline std::pair<int, int> PathPlanning::vecPositionToCoord(VecPosition vec) {
-    return std::make_pair(int(vec.getX()) + 150, int(vec.getY()) + 100);
+    return std::make_pair(int(vec.getX()) + int(AV_COST_BOARD_X / 2), int(vec.getY()) + int(AV_COST_BOARD_Y / 2));
 }
 
 inline VecPosition PathPlanning::coordToVecPosition(int x, int y) {
-    return VecPosition(double(x - 150), double(y - 100), 0);
+    return VecPosition(double(x - int(AV_COST_BOARD_X / 2)), 
+                       double(y - int(AV_COST_BOARD_Y / 2)), 
+                       0);
 }
 
 int PathPlanning::getPathLength() const {
