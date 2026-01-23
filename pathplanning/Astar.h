@@ -82,10 +82,14 @@ class PathPlanning {
         //               int* opps, int* teammates,
         //               int ballX, int ballY);
         int getPathLength() const;
+        const std::array<float, AV_COST_BOARD_X*AV_COST_BOARD_Y>& getCostBoard() const {return costBoard;}
+        int getNumObstacles() {return numObstacles;}
+        VecPosition indexToVecPosition(int index);
             
 
     private:
-        float costBoard[AV_COST_BOARD_X*AV_COST_BOARD_Y];
+        //float costBoard[AV_COST_BOARD_X*AV_COST_BOARD_Y];
+        std::array<float, AV_COST_BOARD_X*AV_COST_BOARD_Y> costBoard;
         // Original implmentation path vector
         //std::vector<std::pair<int, int>> finalPath;
         // Final path for integrating with ATVilla codebase
@@ -112,10 +116,4 @@ class PathPlanning {
 
 };
 
-
-
-// extern void build_direct_path(float cur_x, float cur_y, float goal_x, float goal_y);
-// extern float* get_obstacles(float* opponent_input, int num_inputs);
-
-// extern void astar(int start_x, int start_y, int goal_x, int goal_y, float* param, int params_size);
 

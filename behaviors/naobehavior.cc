@@ -247,6 +247,9 @@ string NaoBehavior::Think(const std::string& message) {
             // or in the inherited classes
             // Parameters are being filled in the beam function.
             this->beam( beamX, beamY, beamAngle );
+            beamX = 0;
+            beamY = 0;
+            beamAngle = 0;
             stringstream ss;
             ss << "(beam " << beamX << " " << beamY << " " << beamAngle << ")";
             particleFilter->setForBeam(beamX, beamY, beamAngle);
@@ -343,13 +346,14 @@ void NaoBehavior::act() {
             bodyModel->setUseOmniWalk(true);
             switch(currentSkill) {
             case SKILL_WALK_OMNI:
+                {}
+                    //TODO REMOVE ASTAR
+                    //we do not have an ASTAR algorithm
+                    
 
-                //TODO REMOVE ASTAR
-                //we do not have an ASTAR algorithm
                 if(index == pathlength) { //index and pathlength default to -1
                     index = 0;
                     PathPlanning pathfinder;
-                    
                     astarpath = pathfinder.findPathAV(this->me, worldModel->getBall(), worldModel);
                     //astarpath = pathfinder.findPathAV(this->me, VecPosition(0,0,0), worldModel);
 
@@ -357,27 +361,38 @@ void NaoBehavior::act() {
                 }
                 goToTarget(astarpath[index]);
 
-                std::cout << "pathlength: " << pathlength << "\n";
+                // std::cout << "pathlength: " << pathlength << "\n";
 
-                std::cout << "index: " << index << "\n";
-                std::cout << "OUR LOC X and Y: " << this->me.getX() << " & " << this->me.getY() << "\n";
-                //std::cout << "Me Vel X: " << velocity.x << "\n";
-                //std::cout << "Me Vel Y: " << velocity.y << "\n";
-                //std::cout << "Me Vel ROT: " << velocity.rot << "\n";
-                std::cout << "Current Path Waypoint X and Y: " << astarpath[index].getX() << " & " << astarpath[index].getY() << "\n";
-                //std::cout << "\n";
+                // std::cout << "index: " << index << "\n";
+                // std::cout << "OUR LOC X and Y: " << this->me.getX() << " & " << this->me.getY() << "\n";
+                // //std::cout << "Me Vel X: " << velocity.x << "\n";
+                // //std::cout << "Me Vel Y: " << velocity.y << "\n";
+                // //std::cout << "Me Vel ROT: " << velocity.rot << "\n";
+                // std::cout << "Current Path Waypoint X and Y: " << astarpath[index].getX() << " & " << astarpath[index].getY() << "\n";
+                // //std::cout << "\n";
 
-                std::cout << "our goal: ";
+                // std::cout << "our goal: ";
                 //astarpath[index].show(CARTESIAN);
                 std::cout << worldModel->getBall().getX()  << " " << worldModel->getBall().getY() << "\n";
 
                 worldModel->getRVSender()->clear();
-                for(int i = index; i < pathlength; ++i) {
+                for(int i = index; i < pathlength-1; ++i) {
                     // astarpath[i].show(CARTESIAN);
-                    std::cout << "i: " << i << std::endl;
-                    worldModel->getRVSender()->drawSphere(std::to_string(i), astarpath[i].getX(), astarpath[i].getY(), 0.05f, 0.05f, RVSender::MAGENTA);
-                    //worldModel->getRVSender()->drawLine(std::to_string(i), astarpath[i].getX(), astarpath[i].getY(), astarpath[i+1].getX(), astarpath[i+1].getY(), RVSender::MAGENTA);
+                    //std::cout << "i: " << i << std::endl;
+                    //worldModel->getRVSender()->drawSphere(std::to_string(i), astarpath[i].getX(), astarpath[i].getY(), 0.05f, 0.05f, RVSender::MAGENTA);
+                    worldModel->getRVSender()->drawLine(std::to_string(i), astarpath[i].getX(), astarpath[i].getY(), astarpath[i+1].getX(), astarpath[i+1].getY(), RVSender::MAGENTA);
                 }
+
+                // const auto& costBoard = pathfinder.getCostBoard();
+                // for (size_t i = 0; i < costBoard.size(); ++i) {
+                //     VecPosition fieldPos = pathfinder.indexToVecPosition(i);
+                //     std::cout << "Cost: "  << costBoard[i] << std::endl;
+                //     //std::cout << fieldPos.getX() << ", " << fieldPos.getY() << std::endl;
+                //     //worldModel->getRVSender()->drawSphere(std::to_string(i), fieldPos.getX(), fieldPos.getY(), 0.05f, 0.05f, RVSender::GREEN);
+                // }
+                // std::cout << "=============================================" << std::endl;
+
+
                 
 
 
@@ -396,6 +411,7 @@ void NaoBehavior::act() {
                 
                 core->move(velocity.paramSet, velocity.x, velocity.y, velocity.rot);
                 break;
+                
             case SKILL_STAND:
                 core->move(0,0,0);
                 break;
