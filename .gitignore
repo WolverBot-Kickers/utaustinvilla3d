@@ -7,3 +7,4 @@ Makefile
 agentspark
 libs/*.so*
 commands.txt
+.vscode/

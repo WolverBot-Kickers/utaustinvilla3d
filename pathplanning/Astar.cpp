@@ -178,9 +178,12 @@ std::vector<VecPosition> PathPlanning::findPathAV(const VecPosition& start, cons
 }
 
 void PathPlanning::getObstaclesAV(WorldModel* worldModel) {
+    //std::cout << "getObstaclesAV() entered" << std::endl; 
     numObstacles = 0;
     int myNum = worldModel->getUNum();
     // Add all valid opponents to obstacles
+    //std::cout << "Opponent loop entered" << std::endl;
+    //std::cout << "numObstacles = " << numObstacles <<std::endl;
     for (int i = WO_OPPONENT1; i <= WO_OPPONENT11; ++i) {
         WorldObject* opponent = worldModel->getWorldObject(i);
         if (opponent->validPosition) {
@@ -189,6 +192,8 @@ void PathPlanning::getObstaclesAV(WorldModel* worldModel) {
             ++numObstacles;
         }
     }
+    //std::cout << "Opponent loop exited" << std::endl;
+    //std::cout << "numObstacles = " << numObstacles <<std::endl;
     // Add all valid teammates to obstacles, not including self
     for (int i = WO_TEAMMATE1; i <= WO_TEAMMATE11; ++i) {
         if (myNum == i - WO_TEAMMATE1 + 1) {
@@ -205,45 +210,74 @@ void PathPlanning::getObstaclesAV(WorldModel* worldModel) {
 }
 
 void PathPlanning::createCostBoardAV() {
+    //std::cout << "createCostBoardAV() entered" << std::endl;
+    
     // Board cost setup: init to 0 for all states
-    for (int i = 0; i <  AV_COST_BOARD_X*AV_COST_BOARD_Y; i++){
+    for (int i = 0; i <  AV_COST_BOARD_X*AV_COST_BOARD_Y; i++) {
         costBoard[i] = 0;
     }
 
+    //std::cout << "Obstacle zone loop entered" << std::endl;
     // for each obstacle, increment the cost 
-    for (int i = 0; i < numObstacles; ++i){
+    for (int i = 0; i < numObstacles; ++i) {
         std::pair<int, int> coords = vecPositionToCoord(obstacles[i]);
         int x = coords.first;
         int y = coords.second;
 
-        // hard radius
-        int j = 0;
-        for (; j < expanGroupSize && expansion_pos_dist[j] < HARD_RADIUS; j++){
-            int xx = x + expansion_pos_x[j];
-            int yy = y + expansion_pos_y[j];
+        const int dx[] = {-1, 0, 1, -1, 1, -1, 0, 1}; 
+        const int dy[] = {-1, -1, -1, 0, 0, 1, 1, 1};
+        // Iterate through neighbors
+        for (int i = 0; i < 8; ++i) {
+            int x_i = x + dx[i];
+            int y_i = y + dy[i];
 
-            if (xx < 0 || xx >= AV_COST_BOARD_X || yy < 0 || yy >= AV_COST_BOARD_Y){
-                continue;
-            }
-            costBoard[yy*AV_COST_BOARD_X + xx] = OFF_LIMIT_COST;
+            int costBoardIndex = y_i*AV_COST_BOARD_X + x_i;
+            costBoard[costBoardIndex] = OFF_LIMIT_COST;
         }
 
-        // soft radius
-        float between = SOFT_RADIUS - HARD_RADIUS;
-        for (; j < expanGroupSize && expansion_pos_dist[j] < SOFT_RADIUS; j++){
-            int xx = x + expansion_pos_x[j];
-            int yy = y + expansion_pos_y[j];
+        //std::cout << "Obstacle " << i <<std::endl;
+        //std::cout << "Obstacle position = " << x << " " << y <<std::endl;
+        
 
-            if (xx < 0 || xx >= AV_COST_BOARD_X || yy < 0 || yy >= AV_COST_BOARD_Y){
-                continue;
-            }
+        // // hard radius
+        // int j = 0;
+        // for (; j < expanGroupSize && expansion_pos_dist[j] < HARD_RADIUS; j++){
+        //     int xx = x + expansion_pos_x[j];
+        //     int yy = y + expansion_pos_y[j];
 
-            if (costBoard[yy*AV_COST_BOARD_X + xx] != OFF_LIMIT_COST){
-                costBoard[yy*AV_COST_BOARD_X + xx] += (SOFT_RADIUS - expansion_pos_dist[j])/between;
-                costBoard[yy*AV_COST_BOARD_X + xx] = std::min(costBoard[yy*AV_COST_BOARD_X + xx], float(OFF_LIMIT_COST));
-            }
-        }
+        //     if (xx < 0 || xx >= AV_COST_BOARD_X || yy < 0 || yy >= AV_COST_BOARD_Y){
+        //         continue;
+        //     }
+        //     int costBoardIndex = yy*AV_COST_BOARD_X + xx;
+        //     costBoard[costBoardIndex] = OFF_LIMIT_COST;
+        //     //std::cout << "x: " << x << " y: " << y << std::endl;
+        //     //std::cout << "xx: " << xx << " yy: " << yy << std::endl;
+
+        //     //std::cout << "costBoardIndex: " << costBoardIndex << " Cost: " << OFF_LIMIT_COST <<std::endl;
+        // }
+
+        // // soft radius
+        // float between = SOFT_RADIUS - HARD_RADIUS;
+        // for (; j < expanGroupSize && expansion_pos_dist[j] < SOFT_RADIUS; j++){
+        //     int xx = x + expansion_pos_x[j];
+        //     int yy = y + expansion_pos_y[j];
+
+        //     if (xx < 0 || xx >= AV_COST_BOARD_X || yy < 0 || yy >= AV_COST_BOARD_Y){
+        //         continue;
+        //     }
+
+        //     if (costBoard[yy*AV_COST_BOARD_X + xx] != OFF_LIMIT_COST){
+        //         costBoard[yy*AV_COST_BOARD_X + xx] += (SOFT_RADIUS - expansion_pos_dist[j])/between;
+        //         costBoard[yy*AV_COST_BOARD_X + xx] = std::min(costBoard[yy*AV_COST_BOARD_X + xx], float(OFF_LIMIT_COST));
+        //     }
+        // }
     }
+    // DEBUG
+    // for (size_t i = 0; i < costBoard.size(); ++i) {
+    //     if (costBoard[i] > 0) {
+    //         std::cout << costBoard[i] << std::endl;
+    //     }   
+    // }
 
     return;
 }

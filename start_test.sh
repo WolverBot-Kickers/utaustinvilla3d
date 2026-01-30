@@ -14,6 +14,7 @@ host="localhost"
 port=3100
 paramsfile=paramfiles/defaultParams.txt
 mhost="localhost"
+unum=11  # Default agent number
 
 
 export LD_LIBRARY_PATH=$LIBS_DIR:$LD_LIBRARY_PATH
@@ -25,7 +26,7 @@ usage()
    echo "  --help                       prints this"
    echo "  HOST                         specifies server host (default: localhost)"
    echo "  -p, --port PORT              specifies server port (default: 3100)"
-   echo "  -t, --team TEAMNAME          specifies team name"
+   echo "  -t, --team TEAMNAME          specifies team name (also sets agent number to 10)"
    echo "  -mh, --mhost HOST            IP of the monitor for sending draw commands (default: localhost)"
    echo "  -pf, --paramsfile FILENAME   name of a parameters file to be loaded (default: paramfiles/defaultParams.txt)") 1>&2
 }
@@ -67,6 +68,7 @@ do
         exit 1
       fi
       team="${2}"
+      unum=10  # Set agent number to 10 when -t flag is used
       shift 1
       ;;
 
@@ -105,7 +107,6 @@ cd $DIR
 
 #unum determines the agent number
 
-"$BINARY_DIR/$AGENT_BINARY" $opt --unum 11 --paramsfile paramfiles/defaultParams_t0.txt --test &#> /dev/null &
+"$BINARY_DIR/$AGENT_BINARY" $opt --unum $unum --paramsfile paramfiles/defaultParams_t0.txt --test &#> /dev/null &
 
 sleep 2
-

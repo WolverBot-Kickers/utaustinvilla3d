@@ -346,18 +346,36 @@ void NaoBehavior::act() {
             bodyModel->setUseOmniWalk(true);
             switch(currentSkill) {
             case SKILL_WALK_OMNI:
-                {}
                     //TODO REMOVE ASTAR
                     //we do not have an ASTAR algorithm
                     
-
+                
                 if(index == pathlength) { //index and pathlength default to -1
+                    std::cout << "PATH CALCULATED" << std::endl;
                     index = 0;
                     PathPlanning pathfinder;
-                    astarpath = pathfinder.findPathAV(this->me, worldModel->getBall(), worldModel);
+                    astarpath = pathfinder.findPathAV(this->me, VecPosition(10, -5, 0), worldModel);
                     //astarpath = pathfinder.findPathAV(this->me, VecPosition(0,0,0), worldModel);
 
                     pathlength = pathfinder.getPathLength();
+                    
+                      
+                }
+                else if (agentTeamName != "UT") {
+                    
+                    //DEBUG
+                    PathPlanning pathfinder;
+                    pathfinder.findPathAV(this->me, worldModel->getBall(), worldModel);
+                    const auto& costBoard = pathfinder.getCostBoard();
+                    for (size_t i = 0; i < costBoard.size(); ++i) {
+                        if (costBoard[i] > 0) {
+                            VecPosition fieldPos = pathfinder.indexToVecPosition(i);
+                            //std::cout << "Cost: "  << costBoard[i] << std::endl;
+                            //std::cout << fieldPos.getX() << ", " << fieldPos.getY() << std::endl;
+                            worldModel->getRVSender()->drawSphere(std::to_string(i), fieldPos.getX(), fieldPos.getY(), 0.05f, 0.05f, RVSender::RED);
+                        }  
+                    }
+                    //std::cout << "=============================================" << std::endl;
                 }
                 goToTarget(astarpath[index]);
 
@@ -373,28 +391,18 @@ void NaoBehavior::act() {
 
                 // std::cout << "our goal: ";
                 //astarpath[index].show(CARTESIAN);
-                std::cout << worldModel->getBall().getX()  << " " << worldModel->getBall().getY() << "\n";
+                //std::cout << worldModel->getBall().getX()  << " " << worldModel->getBall().getY() << "\n";
 
                 worldModel->getRVSender()->clear();
-                for(int i = index; i < pathlength-1; ++i) {
-                    // astarpath[i].show(CARTESIAN);
-                    //std::cout << "i: " << i << std::endl;
-                    //worldModel->getRVSender()->drawSphere(std::to_string(i), astarpath[i].getX(), astarpath[i].getY(), 0.05f, 0.05f, RVSender::MAGENTA);
-                    worldModel->getRVSender()->drawLine(std::to_string(i), astarpath[i].getX(), astarpath[i].getY(), astarpath[i+1].getX(), astarpath[i+1].getY(), RVSender::MAGENTA);
+                if (agentTeamName != "UT") {
+                    for(int i = index; i < pathlength-1; ++i) {
+                        // astarpath[i].show(CARTESIAN);
+                        //std::cout << "i: " << i << std::endl;
+                        //worldModel->getRVSender()->drawSphere(std::to_string(i), astarpath[i].getX(), astarpath[i].getY(), 0.05f, 0.05f, RVSender::MAGENTA);
+                        worldModel->getRVSender()->drawLine(std::to_string(i), astarpath[i].getX(), astarpath[i].getY(), astarpath[i+1].getX(), astarpath[i+1].getY(), RVSender::YELLOW);
+                    }
                 }
-
-                // const auto& costBoard = pathfinder.getCostBoard();
-                // for (size_t i = 0; i < costBoard.size(); ++i) {
-                //     VecPosition fieldPos = pathfinder.indexToVecPosition(i);
-                //     std::cout << "Cost: "  << costBoard[i] << std::endl;
-                //     //std::cout << fieldPos.getX() << ", " << fieldPos.getY() << std::endl;
-                //     //worldModel->getRVSender()->drawSphere(std::to_string(i), fieldPos.getX(), fieldPos.getY(), 0.05f, 0.05f, RVSender::GREEN);
-                // }
-                // std::cout << "=============================================" << std::endl;
-
-
-                
-
+                worldModel->getRVSender()->drawSphere("goal", 10, -5, 0.05f, 0.05f, RVSender::GREEN);
 
                 //!works but maybe need to 
                 //! x and y may be flipped
@@ -406,10 +414,15 @@ void NaoBehavior::act() {
                     && this->me.getY() < astarpath[index].getY() + 0.2 && this->me.getY() > astarpath[index].getY() - 0.2) {
                     ++index;
                     }
-                
+                if (agentTeamName == "UT") {
+                    core->move(velocity.paramSet, 0, 0, 0);
+                }
+                else {
+                    core->move(velocity.paramSet, velocity.x, velocity.y, velocity.rot);
+                }
 
                 
-                core->move(velocity.paramSet, velocity.x, velocity.y, velocity.rot);
+                //core->move(velocity.paramSet, velocity.x, velocity.y, velocity.rot);
                 break;
                 
             case SKILL_STAND:
